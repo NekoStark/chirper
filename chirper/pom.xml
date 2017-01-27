@@ -18,6 +18,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<!-- MAVEN COMPILER -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -26,6 +27,8 @@
 						<target>1.8</target>
 					</configuration>
 				</plugin>
+				
+				<!-- JACOCO -->
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
@@ -54,12 +57,26 @@
 						</execution>
 					</executions>
 				</plugin>
+				
+				<!-- SUREFIRE -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.19.1</version>
 					<configuration>
 						<argLine>${surefireArgLine}</argLine>
+					</configuration>
+				</plugin>
+				
+				<!-- COVERALLS -->
+				<plugin>
+					<groupId>org.eluder.coveralls</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>4.3.0</version>
+					<configuration>
+						<jacocoReports>
+							<jacocoReport>${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml</jacocoReport>
+						</jacocoReports>
 					</configuration>
 				</plugin>
 			</plugins>
