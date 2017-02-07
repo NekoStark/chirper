@@ -9,6 +9,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jacoco.report.path>${project.basedir}/target/jacoco</jacoco.report.path>
+		<sonar.language>java</sonar.language>
+		<sonar.jacoco.reportPath>${jacoco.report.path}/jacoco.exec</sonar.jacoco.reportPath>
 	</properties>
 
 	<modules>
