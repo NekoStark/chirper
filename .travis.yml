@@ -3,12 +3,17 @@ jdk:
   - oraclejdk8
 
 sudo: false
-cache:
- directories:
- - $HOME/.m2
-
-# skip installation step
 install: true
 
+addons:
+  sonarqube:
+    token:
+      secure: "fac68a72bd2d26303eac2b429236e34d1176885d"
+
+cache:
+ directories:
+ - '$HOME/.m2/repository'
+ - '$HOME/.sonar/cache'
+
 script:
-- mvn -f chirper/pom.xml clean verify -Pjacoco coveralls:report
+- mvn -f chirper/pom.xml clean verify -Pjacoco sonar:sonar coveralls:report
