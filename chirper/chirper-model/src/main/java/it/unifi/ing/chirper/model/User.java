@@ -6,14 +6,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import it.unifi.ing.chirper.model.utils.password.UserPasswordTools;
 
-public class User {
+@Entity
+@Table(name="users")
+public class User extends BaseEntity{
 
 	private String userName;
 	private String email;
 	private String password;
+	@ManyToMany
+	@JoinTable(name="friends", joinColumns=@JoinColumn(name="user_id"))
 	private Set<User> friends;
+	@OneToMany(mappedBy="author", cascade=CascadeType.REMOVE)
 	private List<Chirp> chirps;
 	
 	public User() {
@@ -51,7 +64,6 @@ public class User {
 	private String encrypt(String plainPassword) {
 		return UserPasswordTools.encrypt( plainPassword );
 	}
-	
 	public Set<User> getFriends() {
 		return Collections.unmodifiableSet( friends );
 	}
@@ -59,12 +71,11 @@ public class User {
 		this.friends.add(user);
 		user.friends.add(this);
 	}
-	
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList( chirps );
 	}
-	void addChirp(Chirp chirps) {
-		this.chirps.add( chirps );
+	public void addChirp(Chirp chirp) {
+		this.chirps.add( chirp );
 	}
 	
 }

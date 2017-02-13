@@ -1,11 +1,23 @@
 package it.unifi.ing.chirper.model;
 
-public class Comment {
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="comments")
+public class Comment extends BaseEntity{
+
+	@ManyToOne
+	@JoinColumn(name="author_id")
 	private User author;
 	private String content;
+	@ManyToOne
+	@JoinColumn(name="comment")
 	private Chirp chirp;
 	
+
 	public User getAuthor() {
 		return author;
 	}
@@ -19,7 +31,7 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public Chirp getChirp() {
 		return chirp;
 	}
@@ -27,5 +39,7 @@ public class Comment {
 		this.chirp = chirp;
 		chirp.addComment(this);
 	}
+	
+	
 	
 }
