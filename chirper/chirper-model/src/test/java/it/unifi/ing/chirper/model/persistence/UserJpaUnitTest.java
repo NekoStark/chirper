@@ -3,19 +3,21 @@ package it.unifi.ing.chirper.model.persistence;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.model.persistence.base.JpaUnitTest;
+import it.unifi.ing.chirper.model.persistence.delegates.UserJpaTestDelegate;
 
 public class UserJpaUnitTest extends JpaUnitTest {
 
-	private UserJpaTest userTest;
+	private UserJpaTestDelegate userTest;
 
 	@Override
 	public void insertData() {
-		userTest.insertData();
+		userTest = new UserJpaTestDelegate();
+		userTest.insertData(entityManager);
 	}
 
 	@Test
 	public void readTest() {
-		userTest.readTest();
+		userTest.readTest(entityManager);
 	}
 	
 	

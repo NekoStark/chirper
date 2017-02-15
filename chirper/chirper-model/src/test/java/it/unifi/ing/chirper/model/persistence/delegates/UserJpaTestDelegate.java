@@ -1,47 +1,39 @@
-package it.unifi.ing.chirper.model.persistence;
+package it.unifi.ing.chirper.model.persistence.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import javax.persistence.EntityManager;
 
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
-import it.unifi.ing.chirper.model.persistence.base.JpaTest;
 
-public class UserJpaTest extends JpaTest {
+public class UserJpaTestDelegate {
 
 	private String uuid;
-	@BeforeClass
-	public static void setUpClass() {
-		initEntityManagerFactory( "unit" );
-	}
 	
-	
-	@Override
-	public void insertData() {
+	public void insertData(EntityManager entityManager) {
 		User user = ModelFactory.user();
-		user.setEmail( "prova@prova.it" );
-		user.setPassword( "password" );
-		user.setUserName( "user" );
+		user.setEmail("prova@prova.it");
+		user.setPassword("password");
+		user.setUserName("user");
 
 		User friend = ModelFactory.user();
 		user.addFriend(friend);
-
+		
 		Chirp chirp = ModelFactory.chirp();
-		user.addChirp(chirp);
-
+		chirp.setAuthor(user);
+		
 		entityManager.persist(user);
+		entityManager.persist(friend);
+		entityManager.persist(chirp);
 
 		uuid = user.getUuid();
-
 	}
 
-	@Test
-	public void readTest() {
+	public void readTest(EntityManager entityManager) {
 		User result = entityManager
 				.createQuery("from User "
 						+ "where uuid = :uuid", User.class)
@@ -50,13 +42,13 @@ public class UserJpaTest extends JpaTest {
         
 		assertNotNull(result);
 		assertNotNull(result.getId());
-		assertEquals(1, result.getChirps().size());
-		assertEquals(1, result.getFriends());
+
 		assertEquals("prova@prova.it", result.getEmail());
 		assertEquals("user", result.getUserName());
 		assertTrue( result.checkPassword( "password" ) );
-
-
+		
+		assertEquals(1, result.getChirps().size());
+		assertEquals(1, result.getFriends().size());
 	}
 
 

@@ -8,7 +8,7 @@ install: true
 addons:
   sonarqube:
     token:
-      secure: "fac68a72bd2d26303eac2b429236e34d1176885d"
+      secure: "iFbtWyuu9Hdnb730Z1f5jFM+vgPAXLIwFA5+imqTbixmoqWvwcD7tzUetEcjrq09705rZZyAWfmvXQfVT6kKkC3UHmY6pSVwrUKia46GzvSMv6n06zEBERtI5PcyNHUtt6go1KpfeOVh0CG7j4qhHvfXI97PcbZ8dVw8HMWE1kaaK/DTwnB8Y5Hrb2ZalKlETXdb+P1iEMfKPFv2437Vm3HbX2VM9uqQLz+lbDhfn7vO4Otk72fIp/Oj6Z+hJ4yu59TbsC5JZysw8IfLcZSg/RvkFvW8Qs+LjRHIF+V713N3oNYRq0pCHCKH2mOnMBSqZQVYkjGq9UjQntbuPdHS66k0oJTOHCSa00S/GleZvPNLXmvJYR1JFYCkV0R+M3iIaK7V+ki9eA+NS00xPv6XWLs7dfy2enADq95olK/bXgv/Vnmf9lDGl0HKcBU5XWNq5lrvoAOnRdkclbFZZEOH647opfJKVh3u8+QbrvJTdC+I5H+NX3py0iZ3piqfTmqlc5nVBlkHEqB/eKVx+Z338aQjLnqhtfkzl0+86PiyePTR8gDj8gw+GhYx88FfSNLmOJ1yi4X7jxIPewE+inkVOEkFd7wq3fvdYMe/tEmQlMqHO+ENWUd7i28jmaRxMpvmG74oKNJM04LBZAYo+krgLhJRvvyeqQIvbgLKK8k7L0Q="
 
 cache:
  directories:

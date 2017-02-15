@@ -20,16 +20,21 @@ import it.unifi.ing.chirper.model.utils.password.UserPasswordTools;
 @Table(name="users")
 public class User extends BaseEntity{
 
-	private String userName;
-	private String email;
-	private String password;
-	@ManyToMany
-	@JoinTable(name="friends", joinColumns=@JoinColumn(name="user_id"))
+	@ManyToMany @JoinTable(name="friends", joinColumns=@JoinColumn(name="user_id"))
 	private Set<User> friends;
+	
 	@OneToMany(mappedBy="author", cascade=CascadeType.REMOVE)
 	private List<Chirp> chirps;
 	
-	public User() {
+	private String userName;
+	private String email;
+	private String password;
+	
+	User() {
+		init();
+	}
+	public User(String uuid) {
+		this.setUuid(uuid);
 		init();
 	}
 
@@ -74,7 +79,7 @@ public class User extends BaseEntity{
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList( chirps );
 	}
-	public void addChirp(Chirp chirp) {
+	void addChirp(Chirp chirp) {
 		this.chirps.add( chirp );
 	}
 	

@@ -9,15 +9,14 @@ import javax.persistence.Table;
 @Table(name="comments")
 public class Comment extends BaseEntity{
 
-	@ManyToOne
-	@JoinColumn(name="author_id")
+	@ManyToOne @JoinColumn(name="author_id")
 	private User author;
-	private String content;
-	@ManyToOne
-	@JoinColumn(name="comment")
-	private Chirp chirp;
 	
+	@ManyToOne @JoinColumn(name="comment")
+	private Chirp chirp;
 
+	private String content;
+	
 	public User getAuthor() {
 		return author;
 	}
@@ -39,7 +38,5 @@ public class Comment extends BaseEntity{
 		this.chirp = chirp;
 		chirp.addComment(this);
 	}
-	
-	
 	
 }

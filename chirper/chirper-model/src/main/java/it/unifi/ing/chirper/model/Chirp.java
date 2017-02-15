@@ -15,21 +15,26 @@ import javax.persistence.Table;
 @Table(name="chirps")
 public class Chirp extends BaseEntity{
 
-	private String content;
-	@ManyToOne
-	@JoinColumn(name="author")
+	@ManyToOne @JoinColumn(name="author")
 	private User author;
+	
+	@ManyToOne @JoinColumn(name="reference")
 	private Chirp reference;
-	@OneToMany(mappedBy="comment", cascade=CascadeType.REMOVE)
+	
+	@OneToMany(mappedBy="chirp", cascade=CascadeType.REMOVE)
 	private List<Comment> comments;
 	
-	public Chirp() {
+	private String content;
+	
+	Chirp() {
 		init();
 	}
-	
+	public Chirp(String uuid) {
+		this.setUuid(uuid);
+		init();
+	}
 	private void init() {
 		comments = new LinkedList<>();
-
 	}
 	
 	public String getContent() {
@@ -53,13 +58,12 @@ public class Chirp extends BaseEntity{
 	public void setReference(Chirp reference) {
 		this.reference = reference;
 	}
+	
 	public List<Comment> getComments() {
 		return Collections.unmodifiableList( comments );
 	}
 	void addComment(Comment comment) {
 		this.comments.add( comment );
 	}
-	
-	
 	
 }
