@@ -48,7 +48,7 @@ public abstract class JpaTest {
 	}
 	
 	protected void clearData() throws Exception {
-		entityManager.createNativeQuery( "TRUNCATE SCHEMA public AND COMMIT" ).executeUpdate();
+		//entityManager.createNativeQuery( "TRUNCATE SCHEMA public AND COMMIT" ).executeUpdate();
 	}
 
     protected abstract void insertData() throws Exception;

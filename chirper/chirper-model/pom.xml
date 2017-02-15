@@ -86,15 +86,62 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	        <groupId>org.slf4j</groupId>
-	        <artifactId>slf4j-log4j12</artifactId>
-	        <version>1.5.2</version>
-    	</dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
 	</dependencies>
 	<parent>
 		<groupId>it.unifi.ing</groupId>
 		<artifactId>chirper</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.17.2</version>
+				<configuration>
+					<images>
+						<image>
+							<name>mysql</name>
+							<run>
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+							</run>
+						</image>
+					</images>
+					<showLogs>true</showLogs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>docker:start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker:stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
 
 </project>

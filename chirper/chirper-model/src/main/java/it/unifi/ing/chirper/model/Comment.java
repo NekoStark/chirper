@@ -17,6 +17,13 @@ public class Comment extends BaseEntity{
 
 	private String content;
 	
+	
+	Comment() {}
+	
+	public Comment(String uuid) {
+		this.setUuid(uuid);
+	}
+	
 	public User getAuthor() {
 		return author;
 	}

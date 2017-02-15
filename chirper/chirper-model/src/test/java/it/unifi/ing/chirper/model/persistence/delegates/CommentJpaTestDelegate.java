@@ -10,50 +10,42 @@ import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
 
-public class ChirpJpaTestDelegate {
-
+public class CommentJpaTestDelegate {
 	private String uuid;
-	
+
 	public void insertData(EntityManager entityManager) {
-		Chirp chirp = ModelFactory.chirp();
-		Chirp reference = ModelFactory.chirp();
-		chirp.setReference(reference);
-		chirp.setContent("Content");
+		
+		Comment comment = ModelFactory.comment();
+		comment.setContent("Content");
 		
 		User author = ModelFactory.user();
-		chirp.setAuthor(author);
-	
-		Comment comment = ModelFactory.comment();
+		comment.setAuthor(author);
+		
+		Chirp chirp = ModelFactory.chirp();
 		comment.setChirp(chirp);
 		
 		entityManager.persist(chirp);
-		entityManager.persist(reference);
-		entityManager.persist(comment);
 		entityManager.persist(author);
+		entityManager.persist(comment);
 		
 		uuid = comment.getUuid();
-		
-		
-		
-		
+
 	}
 
 	public void readTest(EntityManager entityManager) {
-		
-		Chirp result = entityManager
-				.createQuery("from Chirp "
-						+ "where uuid = :uuid", Chirp.class)
+
+		Comment result = entityManager
+				.createQuery("from Comment "
+						+ "where uuid = :uuid", Comment.class)
 				.setParameter("uuid", uuid)
 				.getSingleResult();
-		
+
 		assertNotNull(result);
 		assertNotNull(result.getAuthor());
-		assertNotNull(result.getReference());
+		assertNotNull(result.getChirp());
 		
 		assertEquals("Content", result.getContent());
-		assertEquals(1, result.getComments().size());
 
-		
+
 	}
-	
 }

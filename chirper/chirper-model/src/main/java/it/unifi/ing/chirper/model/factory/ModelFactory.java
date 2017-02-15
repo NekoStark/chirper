@@ -19,7 +19,7 @@ public final class ModelFactory {
 	}
 	
 	public static Comment comment() {
-		return new Comment();
+		return new Comment(UUID.randomUUID().toString());
 	}
 	
 	
