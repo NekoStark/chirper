@@ -31,7 +31,7 @@ public class ChirpJpaTestDelegate {
 		entityManager.persist(comment);
 		entityManager.persist(author);
 		
-		uuid = comment.getUuid();
+		uuid = chirp.getUuid();
 		
 		
 		

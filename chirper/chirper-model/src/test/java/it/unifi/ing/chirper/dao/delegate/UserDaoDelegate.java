@@ -44,17 +44,18 @@ public class UserDaoDelegate {
 	}
 
 	public void testDeleteUser(){
-		User firend = userDao.findById(firendId);
+		User friend = userDao.findById(firendId);
 		Chirp chirp = chirpDao.findById(chirpId);
 		
-		assertEquals(1, firend.getFriends().size());
+		assertEquals(1, friend.getFriends().size());
 		assertNotNull(chirp);
 
 		userDao.delete(userId);
 
-		assertEquals(0, firend.getFriends().size());
+		assertEquals(0, friend.getFriends().size());
 		assertNull(chirpDao.findById(chirpId));
 	}
+
 
 	public void init(EntityManager entityManager) throws Exception {
 		userDao = new UserDao();

@@ -62,6 +62,9 @@ public class Chirp extends BaseEntity{
 	public List<Comment> getComments() {
 		return Collections.unmodifiableList( comments );
 	}
+	public void removeComment(Comment comment){
+		comments.remove(comment);
+	}
 	void addComment(Comment comment) {
 		this.comments.add( comment );
 	}
