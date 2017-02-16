@@ -10,7 +10,7 @@ public class CommentJpaIT extends JpaIT{
 	private CommentJpaTestDelegate commentTest;
 	
 	@Override
-	public void insertData() {
+	public void initTest() {
 		commentTest = new CommentJpaTestDelegate();
 		commentTest.insertData(entityManager);
 	}

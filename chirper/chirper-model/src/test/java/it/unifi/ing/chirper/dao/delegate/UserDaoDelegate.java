@@ -24,22 +24,17 @@ public class UserDaoDelegate {
 	private Long firendId;
 	private Long chirpId;
 
-
 	public void testFindById() {
 		User result = userDao.findById(userId);
 
 		assertNotNull(result);
 	}
 
-
-
 	public void testFindByUsername() {
-		List<User> result = userDao.findBUsername("username");
+		List<User> result = userDao.findByUsername("username");
 
 		assertEquals(1, result.size());
 	}
-
-
 
 	public void testSave(){
 		User user = ModelFactory.user();
@@ -47,7 +42,6 @@ public class UserDaoDelegate {
 
 		assertNotNull(userDao.findById(user.getId()));
 	}
-
 
 	public void testDeleteUser(){
 		User firend = userDao.findById(firendId);
@@ -62,9 +56,7 @@ public class UserDaoDelegate {
 		assertNull(chirpDao.findById(chirpId));
 	}
 
-
-	public void setUp(EntityManager entityManager) throws Exception {
-
+	public void init(EntityManager entityManager) throws Exception {
 		userDao = new UserDao();
 		chirpDao = new ChirpDao();
 		FieldUtils.assignField(userDao, "entityManager", entityManager);
@@ -88,9 +80,7 @@ public class UserDaoDelegate {
 		entityManager.persist(friend);
 		entityManager.persist(chirp);
 
-
 		entityManager.flush();
-
 
 		userId = user.getId();
 		firendId = friend.getId();

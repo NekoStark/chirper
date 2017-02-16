@@ -19,7 +19,7 @@ public abstract class JpaTest {
 		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
-        insertData();
+        initTest();
         entityManager.getTransaction().commit();
         entityManager.clear();
 		
@@ -37,6 +37,6 @@ public abstract class JpaTest {
 	
 	protected abstract String getPersistenceUnitName();
 
-	protected abstract void insertData() throws Exception;
+	protected abstract void initTest() throws Exception;
 	
 }

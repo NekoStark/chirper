@@ -10,7 +10,7 @@ public class ChirpJpaUnitTest extends JpaUnitTest{
 	private ChirpJpaTestDelegate chirpTest;
 
 	@Override
-	public void insertData() {
+	public void initTest() {
 		chirpTest = new ChirpJpaTestDelegate();
 		chirpTest.insertData(entityManager);
 	}

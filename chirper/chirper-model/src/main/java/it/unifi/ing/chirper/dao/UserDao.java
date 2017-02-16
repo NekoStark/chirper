@@ -2,14 +2,13 @@ package it.unifi.ing.chirper.dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.unifi.ing.chirper.model.User;
 
-@Stateless
 public class UserDao {
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -27,9 +26,9 @@ public class UserDao {
 			friend.removeFriend(user);
 		}
 		entityManager.remove(user);
-		entityManager.flush();
 	}
-	public List<User> findBUsername(String username) {
+	
+	public List<User> findByUsername(String username) {
 		return entityManager
 				.createQuery("from User u where "
 						+ "u.userName = :uUsr", User.class)

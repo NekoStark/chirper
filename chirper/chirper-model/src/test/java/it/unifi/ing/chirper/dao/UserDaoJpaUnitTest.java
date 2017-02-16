@@ -1,38 +1,40 @@
 package it.unifi.ing.chirper.dao;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegate.UserDaoDelegate;
 import it.unifi.ing.chirper.model.persistence.base.JpaUnitTest;
 
-public class UserDaoJpaUnitTest extends JpaUnitTest{
+public class UserDaoJpaUnitTest extends JpaUnitTest {
 
 	private UserDaoDelegate userDaoTest;
 	
-	@Before
-	public void setup() throws Exception{
-		userDaoTest.setUp(entityManager);
-	}
-	
 	@Override
-	protected void insertData() throws Exception {
-		
+	protected void initTest() throws Exception {
 		userDaoTest = new UserDaoDelegate();
-		
+
+		userDaoTest.init(entityManager);
 		userDaoTest.insertData(entityManager);
-		
 	}
-	
-	
+
 	@Test
-	public void readTest() {
-		userDaoTest.testSave();
+	public void testFindById() {
 		userDaoTest.testFindById();
+	}
+
+	@Test
+	public void testFindByUsername() {
 		userDaoTest.testFindByUsername();
+	}
+
+	@Test
+	public void testSave() {
+		userDaoTest.testSave();
+	}
+
+	@Test
+	public void testDeleteUser() {
 		userDaoTest.testDeleteUser();
 	}
-	
-	
 
 }

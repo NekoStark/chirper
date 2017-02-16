@@ -11,7 +11,7 @@ public class UserJpaIT extends JpaIT {
 	private UserJpaTestDelegate userTest;
 
 	@Override
-	public void insertData() {
+	public void initTest() {
 		userTest = new UserJpaTestDelegate();
 		userTest.insertData(entityManager);
 	}
