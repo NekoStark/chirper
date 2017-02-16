@@ -21,6 +21,4 @@ public class UserJpaIT extends JpaIT {
 		userTest.readTest(entityManager);
 	}
 
-
-
 }

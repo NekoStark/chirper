@@ -1,13 +1,12 @@
 package it.unifi.ing.chirper.model.persistence.base;
 
-
-import org.junit.BeforeClass;
-
 public abstract class JpaUnitTest extends JpaTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		initEntityManagerFactory( "unit" );
+	private static final String PERSISTENCE_NAME = "unit";
+	
+	@Override
+	protected String getPersistenceUnitName() {
+		return PERSISTENCE_NAME;
 	}
 	 
 }

@@ -20,6 +20,4 @@ public class UserJpaUnitTest extends JpaUnitTest {
 		userTest.readTest(entityManager);
 	}
 	
-	
-	
 }
