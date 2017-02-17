@@ -6,17 +6,35 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import it.unifi.ing.chirper.model.utils.password.UserPasswordTools;
 
-public class User {
+@Entity
+@Table(name="users")
+public class User extends BaseEntity{
 
+	@ManyToMany @JoinTable(name="friends", joinColumns=@JoinColumn(name="user_id"))
+	private Set<User> friends;
+	
+	@OneToMany(mappedBy="author", cascade=CascadeType.REMOVE)
+	private List<Chirp> chirps;
+	
 	private String userName;
 	private String email;
 	private String password;
-	private Set<User> friends;
-	private List<Chirp> chirps;
 	
-	public User() {
+	User() {
+		init();
+	}
+	public User(String uuid) {
+		this.setUuid(uuid);
 		init();
 	}
 
@@ -51,7 +69,6 @@ public class User {
 	private String encrypt(String plainPassword) {
 		return UserPasswordTools.encrypt( plainPassword );
 	}
-	
 	public Set<User> getFriends() {
 		return Collections.unmodifiableSet( friends );
 	}
@@ -60,11 +77,25 @@ public class User {
 		user.friends.add(this);
 	}
 	
+	public void removeFriend(User user){
+		friends.remove(user);
+
+	}
+
+	public void clearFriends(){
+		friends.clear();
+	}
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList( chirps );
 	}
-	void addChirp(Chirp chirps) {
-		this.chirps.add( chirps );
+	public void removeChirp(Chirp chirp){
+		chirps.remove(chirp);
+	}
+	public void clearChirp(){
+		chirps.clear();
+	}
+	void addChirp(Chirp chirp) {
+		this.chirps.add( chirp );
 	}
 	
 }

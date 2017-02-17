@@ -4,17 +4,35 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Chirp {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-	private String content;
+@Entity
+@Table(name="chirps")
+public class Chirp extends BaseEntity{
+
+	@ManyToOne @JoinColumn(name="author")
 	private User author;
+	
+	@ManyToOne @JoinColumn(name="reference")
 	private Chirp reference;
+	
+	@OneToMany(mappedBy="chirp", cascade=CascadeType.REMOVE)
 	private List<Comment> comments;
 	
-	public Chirp() {
+	private String content;
+	
+	Chirp() {
 		init();
 	}
-	
+	public Chirp(String uuid) {
+		this.setUuid(uuid);
+		init();
+	}
 	private void init() {
 		comments = new LinkedList<>();
 	}
@@ -25,7 +43,7 @@ public class Chirp {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public User getAuthor() {
 		return author;
 	}
@@ -44,10 +62,11 @@ public class Chirp {
 	public List<Comment> getComments() {
 		return Collections.unmodifiableList( comments );
 	}
+	public void removeComment(Comment comment){
+		comments.remove(comment);
+	}
 	void addComment(Comment comment) {
 		this.comments.add( comment );
 	}
-	
-	
 	
 }
