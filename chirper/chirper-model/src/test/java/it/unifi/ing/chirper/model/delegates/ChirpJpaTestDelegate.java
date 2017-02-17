@@ -1,4 +1,4 @@
-package it.unifi.ing.chirper.model.persistence.delegates;
+package it.unifi.ing.chirper.model.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,9 +12,15 @@ import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class ChirpJpaTestDelegate {
 
+	private EntityManager entityManager;
+	
 	private String uuid;
 	
-	public void insertData(EntityManager entityManager) {
+	public void init(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+	
+	public void insertData() {
 		Chirp chirp = ModelFactory.chirp();
 		Chirp reference = ModelFactory.chirp();
 		chirp.setReference(reference);
@@ -32,13 +38,10 @@ public class ChirpJpaTestDelegate {
 		entityManager.persist(author);
 		
 		uuid = chirp.getUuid();
-		
-		
-		
-		
+
 	}
 
-	public void readTest(EntityManager entityManager) {
+	public void readTest() {
 		
 		Chirp result = entityManager
 				.createQuery("from Chirp "
@@ -52,7 +55,6 @@ public class ChirpJpaTestDelegate {
 		
 		assertEquals("Content", result.getContent());
 		assertEquals(1, result.getComments().size());
-
 		
 	}
 	

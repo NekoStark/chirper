@@ -1,4 +1,4 @@
-package it.unifi.ing.chirper.model.persistence.delegates;
+package it.unifi.ing.chirper.model.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,10 +11,16 @@ import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class CommentJpaTestDelegate {
-	private String uuid;
+	
+	private EntityManager entityManager;
 
-	public void insertData(EntityManager entityManager) {
-		
+	private String uuid;
+	
+	public void init(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+	
+	public void insertData() {
 		Comment comment = ModelFactory.comment();
 		comment.setContent("Content");
 		
@@ -32,8 +38,7 @@ public class CommentJpaTestDelegate {
 
 	}
 
-	public void readTest(EntityManager entityManager) {
-
+	public void readTest() {
 		Comment result = entityManager
 				.createQuery("from Comment "
 						+ "where uuid = :uuid", Comment.class)

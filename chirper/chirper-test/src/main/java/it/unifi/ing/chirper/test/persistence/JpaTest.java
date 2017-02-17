@@ -1,4 +1,4 @@
-package it.unifi.ing.chirper.model.persistence.base;
+package it.unifi.ing.chirper.test.persistence;
 
 
 import javax.persistence.EntityManager;

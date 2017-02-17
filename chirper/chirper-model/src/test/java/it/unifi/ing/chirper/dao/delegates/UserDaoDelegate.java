@@ -1,4 +1,4 @@
-package it.unifi.ing.chirper.dao.delegate;
+package it.unifi.ing.chirper.dao.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -8,12 +8,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
-import it.unifi.ing.chirper.utils.FieldUtils;
 
 public class UserDaoDelegate {
 
@@ -57,14 +58,15 @@ public class UserDaoDelegate {
 	}
 
 
-	public void init(EntityManager entityManager) throws Exception {
+	public void init(EntityManager entityManager) throws IllegalAccessException {
 		userDao = new UserDao();
 		chirpDao = new ChirpDao();
-		FieldUtils.assignField(userDao, "entityManager", entityManager);
-		FieldUtils.assignField(chirpDao, "entityManager", entityManager);
+		
+		FieldUtils.writeDeclaredField(userDao, "entityManager", entityManager, true);
+		FieldUtils.writeDeclaredField(chirpDao, "entityManager", entityManager, true);
 	}
 
-	public void insertData(EntityManager entityManager) throws Exception {
+	public void insertData(EntityManager entityManager) {
 		User user = ModelFactory.user();
 
 		User friend = ModelFactory.user();

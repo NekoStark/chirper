@@ -10,6 +10,7 @@ import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 
 public class CommentDao {
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	

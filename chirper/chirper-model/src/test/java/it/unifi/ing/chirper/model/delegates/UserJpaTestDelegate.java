@@ -1,4 +1,4 @@
-package it.unifi.ing.chirper.model.persistence.delegates;
+package it.unifi.ing.chirper.model.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,9 +12,15 @@ import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class UserJpaTestDelegate {
 
+	private EntityManager entityManager;
+
 	private String uuid;
 	
-	public void insertData(EntityManager entityManager) {
+	public void init(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+	
+	public void insertData() {
 		User user = ModelFactory.user();
 		user.setEmail("prova@prova.it");
 		user.setPassword("password");
@@ -33,7 +39,7 @@ public class UserJpaTestDelegate {
 		uuid = user.getUuid();
 	}
 
-	public void readTest(EntityManager entityManager) {
+	public void readTest() {
 		User result = entityManager
 				.createQuery("from User "
 						+ "where uuid = :uuid", User.class)

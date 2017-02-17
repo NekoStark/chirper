@@ -2,8 +2,8 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegate.ChirpDaoDelegate;
-import it.unifi.ing.chirper.model.persistence.base.JpaIT;
+import it.unifi.ing.chirper.dao.delegates.ChirpDaoDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaIT;
 
 public class ChirpDaoJpaIT extends JpaIT{
 private ChirpDaoDelegate chirpDaoTest;

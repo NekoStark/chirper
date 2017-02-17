@@ -1,10 +1,12 @@
-package it.unifi.ing.chirper.dao.delegate;
+package it.unifi.ing.chirper.dao.delegates;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import javax.persistence.EntityManager;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.CommentDao;
@@ -13,7 +15,6 @@ import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
-import it.unifi.ing.chirper.utils.FieldUtils;
 
 public class CommentDaoDelegate {
 	private CommentDao commentDao;
@@ -24,33 +25,32 @@ public class CommentDaoDelegate {
 	private Long chirpId;
 	private Long authorId;
 	
-	
-	public void testSave(){
+	public void testSave() {
 		Comment comment = ModelFactory.comment();
 		commentDao.save(comment);
 		
 		assertNotNull(commentDao.findById(comment.getId()));
 	}
 	
-	public void testFindById(){
+	public void testFindById() {
 		assertNotNull(commentDao.findById(commentId));
 	}
 	
-	public void testFindByChirp(){
+	public void testFindByChirp() {
 		Chirp chirp = chirpDao.findById(chirpId);
 		
 		assertNotNull(chirp);
 		assertEquals(1, commentDao.findByChirp(chirp).size());
 	}
 	
-	public void testFindByAuthor(){
+	public void testFindByAuthor() {
 		User author = userDao.findById(authorId);
 		
 		assertNotNull(author);
 		assertEquals(1, commentDao.findByAuthor(author).size());
 	}
 	
-	public void testDelete(){
+	public void testDelete() {
 		Comment comment = commentDao.findById(commentId);
 		
 		assertNotNull(comment);
@@ -62,17 +62,17 @@ public class CommentDaoDelegate {
 		assertNull(commentDao.findById(comment.getId()));
 	}
 	
-	public void init(EntityManager entityManager) throws Exception {
+	public void init(EntityManager entityManager) throws IllegalAccessException {
 		commentDao = new CommentDao();
 		chirpDao = new ChirpDao();
 		userDao = new UserDao();
 		
-		FieldUtils.assignField(userDao, "entityManager", entityManager);
-		FieldUtils.assignField(chirpDao, "entityManager", entityManager);
-		FieldUtils.assignField(commentDao, "entityManager", entityManager);
+		FieldUtils.writeDeclaredField(userDao, "entityManager", entityManager, true);
+		FieldUtils.writeDeclaredField(chirpDao, "entityManager", entityManager, true);
+		FieldUtils.writeDeclaredField(commentDao, "entityManager", entityManager, true);
 	}
 
-	public void insertData(EntityManager entityManager) throws Exception {
+	public void insertData(EntityManager entityManager) {
 		Comment comment = ModelFactory.comment();
 		comment.setContent("Content");
 		

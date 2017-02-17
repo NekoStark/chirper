@@ -14,9 +14,9 @@
 	</properties>
 
 	<modules>
+		<module>chirper-test</module>
 		<module>chirper-model</module>
 	</modules>
-
 
 	<build>
 		<plugins>
@@ -47,6 +47,12 @@
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.5</version>
 		</dependency>
 		
 		<dependency>

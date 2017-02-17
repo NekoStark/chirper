@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
 
-
 public class ChirpDao {
+
 	@PersistenceContext
 	private EntityManager entityManager;
 

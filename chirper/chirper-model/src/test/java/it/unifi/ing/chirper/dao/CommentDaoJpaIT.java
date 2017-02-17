@@ -2,8 +2,8 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegate.CommentDaoDelegate;
-import it.unifi.ing.chirper.model.persistence.base.JpaIT;
+import it.unifi.ing.chirper.dao.delegates.CommentDaoDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaIT;
 
 public class CommentDaoJpaIT extends JpaIT {
 	private CommentDaoDelegate commentDaoTest;

@@ -2,8 +2,8 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegate.UserDaoDelegate;
-import it.unifi.ing.chirper.model.persistence.base.JpaUnitTest;
+import it.unifi.ing.chirper.dao.delegates.UserDaoDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class UserDaoJpaUnitTest extends JpaUnitTest {
 
