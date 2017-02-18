@@ -2,15 +2,15 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegates.ChirpDaoDelegate;
+import it.unifi.ing.chirper.dao.delegates.ChirpDaoTestDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaIT;
 
 public class ChirpDaoJpaIT extends JpaIT{
-private ChirpDaoDelegate chirpDaoTest;
+private ChirpDaoTestDelegate chirpDaoTest;
 	
 	@Override
 	protected void initTest() throws Exception {
-		chirpDaoTest = new ChirpDaoDelegate();
+		chirpDaoTest = new ChirpDaoTestDelegate();
 
 		chirpDaoTest.init(entityManager);
 		chirpDaoTest.insertData(entityManager);

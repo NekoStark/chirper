@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import it.unifi.ing.chirper.model.utils.password.UserPasswordTools;
 
 @Entity
@@ -57,6 +59,7 @@ public class User extends BaseEntity{
 		this.email = email;
 	}
 	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

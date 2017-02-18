@@ -2,16 +2,16 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegates.UserDaoDelegate;
+import it.unifi.ing.chirper.dao.delegates.UserDaoTestDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class UserDaoJpaUnitTest extends JpaUnitTest {
 
-	private UserDaoDelegate userDaoTest;
+	private UserDaoTestDelegate userDaoTest;
 	
 	@Override
 	protected void initTest() throws Exception {
-		userDaoTest = new UserDaoDelegate();
+		userDaoTest = new UserDaoTestDelegate();
 
 		userDaoTest.init(entityManager);
 		userDaoTest.insertData(entityManager);

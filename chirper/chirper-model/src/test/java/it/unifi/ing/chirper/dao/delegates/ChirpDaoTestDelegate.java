@@ -17,7 +17,7 @@ import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
 
-public class ChirpDaoDelegate {
+public class ChirpDaoTestDelegate {
 
 	private ChirpDao chirpDao;
 	private UserDao userDao;
