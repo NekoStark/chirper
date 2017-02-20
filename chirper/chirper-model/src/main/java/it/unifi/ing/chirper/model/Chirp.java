@@ -51,6 +51,9 @@ public class Chirp extends BaseEntity{
 		this.author = author;
 		author.addChirp(this);
 	}
+	void clearAuthor() {
+		this.author = null;
+	}
 	
 	public Chirp getReference() {
 		return reference;
