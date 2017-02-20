@@ -80,9 +80,6 @@ public class User extends BaseEntity{
 	public void removeFriend(User user){
 		friends.remove(user);
 	}
-	public void clearFriends(){
-		friends.clear();
-	}
 	
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList(chirps);

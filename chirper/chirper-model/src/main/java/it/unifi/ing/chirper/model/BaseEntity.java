@@ -29,16 +29,8 @@ public abstract class BaseEntity {
 		return id;
 	}
 
-	void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getUuid() {
 		return uuid;
-	}
-
-	void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	@Override
