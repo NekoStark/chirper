@@ -30,7 +30,7 @@ public class Chirp extends BaseEntity{
 		init();
 	}
 	public Chirp(String uuid) {
-		this.setUuid(uuid);
+		super(uuid);
 		init();
 	}
 	private void init() {

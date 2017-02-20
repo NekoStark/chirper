@@ -19,6 +19,9 @@ public abstract class BaseEntity {
 	}
 
 	public BaseEntity(String uuid) {
+		if(uuid == null) {
+			throw new IllegalArgumentException("uuid cannot be null");
+		}
 		this.uuid = uuid;
 	}
 
@@ -55,9 +58,6 @@ public abstract class BaseEntity {
 			return false;
 		}
 		if (!(obj instanceof BaseEntity)) {
-			return false;
-		}
-		if (uuid == null) {
 			return false;
 		}
 		

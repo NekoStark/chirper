@@ -34,7 +34,7 @@ public class User extends BaseEntity{
 		init();
 	}
 	public User(String uuid) {
-		this.setUuid(uuid);
+		super(uuid);
 		init();
 	}
 
