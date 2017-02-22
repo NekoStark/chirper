@@ -8,18 +8,18 @@ import javax.persistence.PersistenceContext;
 import it.unifi.ing.chirper.model.User;
 
 public class UserDao {
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	public void save(User user) {
 		entityManager.persist(user);
 	}
-	
-	public User findById(Long userId){
+
+	public User findById(Long userId) {
 		return entityManager.find(User.class, userId);
 	}
-	
+
 	public void delete(Long userId) {
 		User user = findById(userId);
 		for (User friend : user.getFriends()) {
@@ -27,10 +27,10 @@ public class UserDao {
 		}
 		entityManager.remove(user);
 	}
-	
+
 	public List<User> findByUsername(String username) {
 		return entityManager
-				.createQuery("from User u where "
+				.createQuery("from User u where " 
 						+ "u.userName = :uUsr", User.class)
 				.setParameter("uUsr", username)
 				.getResultList();

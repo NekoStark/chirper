@@ -34,7 +34,7 @@ public class User extends BaseEntity{
 		init();
 	}
 	public User(String uuid) {
-		this.setUuid(uuid);
+		super(uuid);
 		init();
 	}
 
@@ -69,6 +69,7 @@ public class User extends BaseEntity{
 	private String encrypt(String plainPassword) {
 		return UserPasswordTools.encrypt( plainPassword );
 	}
+	
 	public Set<User> getFriends() {
 		return Collections.unmodifiableSet( friends );
 	}
@@ -76,26 +77,19 @@ public class User extends BaseEntity{
 		this.friends.add(user);
 		user.friends.add(this);
 	}
-	
 	public void removeFriend(User user){
 		friends.remove(user);
-
-	}
-
-	public void clearFriends(){
-		friends.clear();
-	}
-	public List<Chirp> getChirps() {
-		return Collections.unmodifiableList( chirps );
-	}
-	public void removeChirp(Chirp chirp){
-		chirps.remove(chirp);
-	}
-	public void clearChirp(){
-		chirps.clear();
-	}
-	void addChirp(Chirp chirp) {
-		this.chirps.add( chirp );
 	}
 	
+	public List<Chirp> getChirps() {
+		return Collections.unmodifiableList(chirps);
+	}
+	void addChirp(Chirp chirp) {
+		this.chirps.add(chirp);
+	}
+	public void removeChirp(Chirp chirp) {
+		chirps.remove(chirp);
+		chirp.clearAuthor();
+	}
+
 }

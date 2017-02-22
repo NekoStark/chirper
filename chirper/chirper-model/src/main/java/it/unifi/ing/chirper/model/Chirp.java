@@ -30,7 +30,7 @@ public class Chirp extends BaseEntity{
 		init();
 	}
 	public Chirp(String uuid) {
-		this.setUuid(uuid);
+		super(uuid);
 		init();
 	}
 	private void init() {
@@ -50,6 +50,9 @@ public class Chirp extends BaseEntity{
 	public void setAuthor(User author) {
 		this.author = author;
 		author.addChirp(this);
+	}
+	void clearAuthor() {
+		this.author = null;
 	}
 	
 	public Chirp getReference() {
