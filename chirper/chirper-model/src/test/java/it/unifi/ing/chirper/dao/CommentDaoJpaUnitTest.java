@@ -3,6 +3,7 @@ package it.unifi.ing.chirper.dao;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegates.CommentDaoDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class CommentDaoJpaUnitTest extends JpaUnitTest {
@@ -10,10 +11,15 @@ public class CommentDaoJpaUnitTest extends JpaUnitTest {
 	private CommentDaoDelegate commentDaoTest;
 	
 	@Override
-	protected void initTest() throws Exception {
-		 commentDaoTest = new CommentDaoDelegate();
+	protected void initTest() throws JpaTestInitializationException {
+		commentDaoTest = new CommentDaoDelegate();
 
-		commentDaoTest.init(entityManager);
+		try {
+			commentDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+
 		commentDaoTest.insertData(entityManager);
 	}
 

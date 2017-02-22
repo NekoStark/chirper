@@ -3,6 +3,7 @@ package it.unifi.ing.chirper.dao;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegates.ChirpDaoDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class ChirpDaoJpaUnitTest extends JpaUnitTest {
@@ -10,10 +11,15 @@ public class ChirpDaoJpaUnitTest extends JpaUnitTest {
 	private ChirpDaoDelegate chirpDaoTest;
 	
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		chirpDaoTest = new ChirpDaoDelegate();
 
-		chirpDaoTest.init(entityManager);
+		try {
+			chirpDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+		
 		chirpDaoTest.insertData(entityManager);
 	}
 
