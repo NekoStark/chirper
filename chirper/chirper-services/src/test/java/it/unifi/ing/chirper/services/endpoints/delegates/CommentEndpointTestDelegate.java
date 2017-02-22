@@ -42,7 +42,7 @@ public class CommentEndpointTestDelegate {
 		com2.setAuthor(u1);
 		com2.setContent("content");
 		com2.setChirp(c1);
-		
+
 		entityManager.persist(c1);
 		entityManager.persist(u1);
 		entityManager.persist(com1);
@@ -50,13 +50,18 @@ public class CommentEndpointTestDelegate {
 	}
 
 	public void testGet(){
-		get("/chirp/" + c1.getId() + "/comments")
-		.then()
-		.assertThat()
-		.body(
+		get("/chirp/" + c1.getId() + "/comments").
+		then().
+		assertThat().
+		body(
 				"size()", is(2),
-				"uuid", hasItems(com1.getUuid(), com2.getUuid())
-				);
+				"uuid", hasItems(com1.getUuid(), com2.getUuid())).
+		statusCode(200);
+
+		get("/chirp/999/comments").
+		then().
+		assertThat().
+		statusCode(404);
 	}
 
 	public void testNew(){
@@ -64,23 +69,63 @@ public class CommentEndpointTestDelegate {
 		header("userId", u1.getId()).
 		header("content", "newContent").
 		when().
-		post("/chirp/" + c1.getId() + "/comments");
+		post("/chirp/" + c1.getId() + "/comments").
+		then().
+		assertThat().
+		body(
+				"author.uuid", is(u1.getUuid())).
+		statusCode(200);
 
 
-		get("/chirp/" + c1.getId() + "/comments")
-		.then()
-		.assertThat()
-		.body(
-				"size()", is(3));
+		get("/chirp/" + c1.getId() + "/comments").
+		then().
+		assertThat().
+		body(
+				"size()", is(3)).
+		statusCode(200);
 		
-		//controllare che facendo il get del messaggio col nuovo id, ha settato l'autore e il contenuto
+		
+		given().
+		header("userId", u1.getId()).
+		header("content", "").
+		when().
+		post("/chirp/" + c1.getId() + "/comments").
+		then().
+		assertThat().
+		statusCode(500);
 	}
 
 	public void testSet(){
 		given().
 		header("content", "newContent").
 		when().
-		post("/chirp/" + c1.getId() + "/" + com1.getId());
+		put("/chirp/" + c1.getId() + "/comments/" + com1.getId()).
+		then().
+		assertThat().
+		body(
+				"content", is("newContent")).
+		statusCode(200);
+		
+		
+		given().
+		header("content", "").
+		when().
+		put("/chirp/" + c1.getId() + "/comments/" + com1.getId()).
+		then().
+		assertThat().
+		statusCode(500);
+		
+		
+		
+		given().
+		header("content", "newContent").
+		when().
+		put("/chirp/999/comments/999").
+		then().
+		assertThat().
+		statusCode(404);
+		
+
 	}
 
 	public void testDel(){
@@ -94,5 +139,5 @@ public class CommentEndpointTestDelegate {
 		then().
 		statusCode(404);
 	}
-	
+
 }

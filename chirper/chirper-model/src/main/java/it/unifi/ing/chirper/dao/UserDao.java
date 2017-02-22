@@ -20,8 +20,7 @@ public class UserDao {
 		return entityManager.find(User.class, userId);
 	}
 	
-	public void delete(Long userId) {
-		User user = findById(userId);
+	public void delete(User user) {
 		for (User friend : user.getFriends()) {
 			friend.removeFriend(user);
 		}

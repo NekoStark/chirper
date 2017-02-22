@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
 import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.CommentDao;
 import it.unifi.ing.chirper.dao.UserDao;
@@ -25,72 +27,76 @@ public class CommentEndpoint {
 
 	@Inject
 	private ChirpDao chirpDao;
-	
+
 	@Inject
 	private UserDao userDao;
-	
+
 	@Inject
 	private CommentDao commentDao;
-	
+
 	@GET
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getComment(@PathParam("id")Long chirpId){
-		try{
-			Chirp chirp = chirpDao.findById(chirpId);
-			return Response.status(200).entity(chirp.getComments()).build();
-		}catch(Exception e){
+		Chirp chirp = chirpDao.findById(chirpId);
+		if(chirp == null){
 			return Response.status(404).build();
 		}
-		
+		return Response.status(200).entity(chirp.getComments()).build();
 	}
-	
+
 	@POST
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response newComment(@PathParam("id")Long chirpId, @HeaderParam("userId")Long userId, @HeaderParam("content") String content){
-		try{
-			Chirp chirp = chirpDao.findById(chirpId);
-			User author = userDao.findById(userId);
-			
-			Comment comment = ModelFactory.comment();
-			commentDao.save(comment);
-			
-			comment.setAuthor(author);
-			comment.setChirp(chirp);
-			return Response.status(200).entity(comment).build();
-		}catch (Exception e) {
+		if(StringUtils.isEmpty(content)){
+			return Response.status(500).build();
+		}
+
+		Chirp chirp = chirpDao.findById(chirpId);
+		User author = userDao.findById(userId);
+
+		if(chirp == null || author == null){
 			return Response.status(404).build();
 		}
-		
+
+		Comment comment = ModelFactory.comment();
+		commentDao.save(comment);
+
+		comment.setAuthor(author);
+		comment.setChirp(chirp);
+		return Response.status(200).entity(comment).build();
+
 	}
-	
-	
+
+
 	@PUT
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId, @HeaderParam("content") String content){
-		if(content == null){
+		if(StringUtils.isEmpty(content)){
+			return Response.status(500).build();
+		}
+
+		Comment comment = commentDao.findById(commentId);
+
+		if(comment == null){
 			return Response.status(404).build();
 		}
-		try{
-			Comment comment = commentDao.findById(commentId);
-			comment.setContent(content);
-			return Response.status(200).build();
-		}catch (Exception e) {
-			return Response.status(404).build();
-		}
+
+		comment.setContent(content);
+		return Response.status(200).entity(comment).build();
 	}
-	
+
 	@DELETE
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId){
-		try{
-			commentDao.delete(commentId);
-			return Response.status(200).build();
-		}catch (Exception e) {
-			return Response.status(400).build();
+		Comment comment = commentDao.findById(commentId);
+		if(comment == null){
+			return Response.status(404).build();
 		}
+		commentDao.delete(comment);
+		return Response.status(200).build();
 	}
 }

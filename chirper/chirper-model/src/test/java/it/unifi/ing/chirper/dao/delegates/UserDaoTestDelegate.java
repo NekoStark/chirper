@@ -51,7 +51,7 @@ public class UserDaoTestDelegate {
 		assertEquals(1, friend.getFriends().size());
 		assertNotNull(chirp);
 
-		userDao.delete(userId);
+		userDao.delete(userDao.findById(chirpId));
 
 		assertEquals(0, friend.getFriends().size());
 		assertNull(chirpDao.findById(chirpId));

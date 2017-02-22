@@ -38,8 +38,7 @@ public class CommentDao {
 		entityManager.persist(comment);
 	}
 	
-	public void delete(Long commentId){
-		Comment comment = findById(commentId);
+	public void delete(Comment comment){
 		comment.getChirp().removeComment(comment);
 		
 		entityManager.remove(comment);

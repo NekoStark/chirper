@@ -36,13 +36,14 @@ public class UserEndpointTestDelegate {
 	}
 
 	public void testQuery() {
-		get("/users")
-		.then()
-		.assertThat()
-		.body(
+		get("/users").
+		then().
+		assertThat().
+		body(
 				"size()", is(2),
 				"uuid", hasItems(u1.getUuid(), u2.getUuid())
-				);
+				).
+		statusCode(200);
 	}
 
 	public void testGet() {
@@ -78,19 +79,32 @@ public class UserEndpointTestDelegate {
 		header("username", "Johan").
 		header("email", "Johan@unifi.it").
 		when().
-		put("/users/" + u1.getId());
+		put("/users/" + u1.getId()). 
+		then().
+		assertThat().
+		statusCode(200);
 
 
-		get("/users/" +u1.getId())
-		.then()
-		.assertThat()
-		.body(
+		get("/users/" +u1.getId()).
+		then().
+		assertThat().
+		body(
 				"uuid", equalTo(u1.getUuid()),
 				"userName", equalTo("Johan"),
 				"password", nullValue(),
-				"email", equalTo("Johan@unifi.it"));
+				"email", equalTo("Johan@unifi.it")). 
+		statusCode(200);
+		
 
-
+		given().
+		header("username", "Johan").
+		header("email", "Johan@unifi.it").
+		when().
+		put("/users/999"). 
+		then().
+		assertThat().
+		statusCode(404);
+		
 	}
 
 	public void testNew(){
@@ -119,7 +133,17 @@ public class UserEndpointTestDelegate {
 		when().
 		post("/users").
 		then().
-		statusCode(404);
+		statusCode(500);
+		
+		
+		given().
+		header("username", "").
+		header("email", "").
+		header("password", "").
+		when().
+		post("/users").
+		then().
+		assertThat().statusCode(500);
 
 	}
 

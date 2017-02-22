@@ -56,8 +56,8 @@ public class ChirpDaoTestDelegate {
 		assertNotNull(chirp);
 		assertEquals(1, chirp.getComments().size());
 		assertNotNull(chirp.getAuthor());
-
-		chirpDao.delete(chirpId);
+		
+		chirpDao.delete(chirpDao.findById(chirpId));
 		
 		assertNull(chirpDao.findById(chirpId));
 		

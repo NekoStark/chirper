@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
@@ -32,9 +34,10 @@ public class UserEndpoint {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response newUser(@HeaderParam("username") String username, @HeaderParam("email") String email, @HeaderParam("password") String password) {		
-		if(username == null || email == null || password == null) {
-			return Response.status(404).build();
+		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
+			return Response.status(500).build();
 		}
+	
 		
 		User result = ModelFactory.user();
 		result.setUserName(username);
@@ -64,14 +67,16 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response set(@PathParam("id")Long userId, @HeaderParam("username") String username, @HeaderParam("email") String email, @HeaderParam("password") String password) {
 		User result = userDao.findById(userId);
-		
-		if(username != null){
+		if(result == null){
+			return Response.status(404).build();
+		}
+		if(!StringUtils.isEmpty(username)){
 			result.setUserName(username);
 		}
-		if(email != null){
+		if(!StringUtils.isEmpty(email)){
 			result.setEmail(email);
 		}
-		if( password != null){
+		if(!StringUtils.isEmpty( password )){
 			result.setPassword(password);
 		}
 		
@@ -84,11 +89,11 @@ public class UserEndpoint {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id")Long userId) {
-		try{
-			userDao.delete(userId);	
-		}catch (Exception e) {
+		User user = userDao.findById(userId);
+		if(user == null){
 			return Response.status(404).build();
 		}
+		userDao.delete(user);	
 		return Response.status(200).build();
 	}
 	

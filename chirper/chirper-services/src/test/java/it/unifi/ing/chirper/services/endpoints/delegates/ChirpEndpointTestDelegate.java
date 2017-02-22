@@ -6,6 +6,7 @@ import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import javax.persistence.EntityManager;
@@ -43,7 +44,7 @@ public class ChirpEndpointTestDelegate {
 		com2.setContent("content");
 		com2.setChirp(c1);
 
-		
+
 		entityManager.persist(c1);
 		entityManager.persist(u1);
 		entityManager.persist(com1);
@@ -52,13 +53,19 @@ public class ChirpEndpointTestDelegate {
 
 
 	public void testGet(){
-		get("/chirp/"+c1.getId())
-		.then()
-		.assertThat()
-		.body(
+		get("/chirp/"+c1.getId()).
+		then().
+		assertThat().
+		body(
 				"uuid", equalTo(c1.getUuid()),
-				"content", equalTo(c1.getContent())
-				);
+				"content", equalTo(c1.getContent())).
+		statusCode(200);
+
+
+		get("/chirp/999").
+		then().
+		assertThat().
+		statusCode(404);
 	}
 
 	public void testNew(){
@@ -72,13 +79,35 @@ public class ChirpEndpointTestDelegate {
 				jsonPath().getLong("id");
 
 
-		get("/chirp/"+chirpId)
-		.then()
-		.assertThat()
-		.body(
+		get("/chirp/"+chirpId).
+		then().
+		assertThat().
+		body(
 				"uuid", notNullValue(),
 				"content", equalTo("content"),
-				"author", notNullValue());
+				"author.uuid", is(u1.getUuid())).
+		statusCode(200);
+
+
+
+		given().
+		header("userId", 999).
+		header("content", "content").
+		when().
+		post("/chirp").
+		then().
+		assertThat().
+		statusCode(404);
+
+
+		given().
+		header("userId", u1.getId()).
+		header("content", "").
+		when().
+		post("/chirp").
+		then().
+		assertThat().
+		statusCode(500);
 
 	}
 
@@ -89,12 +118,21 @@ public class ChirpEndpointTestDelegate {
 		put("/chirp/" + c1.getId());
 
 
-		get("/chirp/" +c1.getId())
-		.then()
-		.assertThat()
-		.body(
-				"content", equalTo("newContent"));
+		get("/chirp/" +c1.getId()).
+		then().
+		assertThat().
+		body(
+				"content", equalTo("newContent")).
+		statusCode(200);
 
+
+		given().
+		header("content", "").
+		when().
+		put("/chirp/" + c1.getId()).
+		then().
+		assertThat().
+		statusCode(500);
 
 	}
 

@@ -21,8 +21,7 @@ public class ChirpDao {
 		return entityManager.find(Chirp.class, chirpId);
 	}
 	
-	public void delete(Long chirpId) {
-		Chirp chirp = findById(chirpId);
+	public void delete(Chirp chirp) {
 		chirp.getAuthor().removeChirp(chirp);
 		entityManager.remove(chirp);
 		entityManager.flush();

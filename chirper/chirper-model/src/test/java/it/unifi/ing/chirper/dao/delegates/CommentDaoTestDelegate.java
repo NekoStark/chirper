@@ -57,7 +57,7 @@ public class CommentDaoTestDelegate {
 		assertNotNull(comment.getAuthor());
 		assertNotNull(comment.getChirp());
 		
-		commentDao.delete(commentId);
+		commentDao.delete(commentDao.findById(commentId));
 		
 		assertNull(commentDao.findById(comment.getId()));
 	}
