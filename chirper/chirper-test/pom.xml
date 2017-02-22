@@ -9,6 +9,12 @@
 	<artifactId>chirper-test</artifactId>
 
 	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		
 		<!-- REST testing dependencies -->
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -39,7 +45,8 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-
+		
+		<!-- Persistence Testing Dependencies -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>

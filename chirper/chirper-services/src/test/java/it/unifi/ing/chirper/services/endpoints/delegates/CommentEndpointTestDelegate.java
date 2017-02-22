@@ -5,8 +5,8 @@ import static io.restassured.RestAssured.given;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 
 import javax.persistence.EntityManager;
 
@@ -14,7 +14,7 @@ import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 
-public class ChirpEndpointTestDelegate {
+public class CommentEndpointTestDelegate {
 	private EntityManager entityManager;
 
 	private Chirp c1;
@@ -50,66 +50,49 @@ public class ChirpEndpointTestDelegate {
 		entityManager.persist(com2);
 	}
 
-
 	public void testGet(){
-		get("/chirp/"+c1.getId())
+		get("/chirp/" + c1.getId() + "/comments")
 		.then()
 		.assertThat()
 		.body(
-				"uuid", equalTo(c1.getUuid()),
-				"content", equalTo(c1.getContent())
+				"size()", is(2),
+				"uuid", hasItems(com1.getUuid(), com2.getUuid())
 				);
 	}
 
 	public void testNew(){
-		long chirpId = given().
-				header("userId", u1.getId()).
-				header("content", "content").
-				when().
-				post("/chirp").
-				then().
-				extract().
-				jsonPath().getLong("id");
+		given().
+		header("userId", u1.getId()).
+		header("content", "newContent").
+		when().
+		post("/chirp/" + c1.getId() + "/comments");
 
 
-		get("/chirp/"+chirpId)
+		get("/chirp/" + c1.getId() + "/comments")
 		.then()
 		.assertThat()
 		.body(
-				"uuid", notNullValue(),
-				"content", equalTo("content"),
-				"author", notNullValue());
-
+				"size()", is(3));
 	}
 
 	public void testSet(){
 		given().
 		header("content", "newContent").
 		when().
-		put("/chirp/" + c1.getId());
-
-
-		get("/chirp/" +c1.getId())
-		.then()
-		.assertThat()
-		.body(
-				"content", equalTo("newContent"));
-
-
+		post("/chirp/" + c1.getId() + "/" + com1.getId());
 	}
 
 	public void testDel(){
 		given().
 		when().
-		delete("/chirp/" +c1.getId());
+		delete("/chirp/" + c1.getId() + "/" + com1.getId());
 
 
 		given().
 		when().
-		delete("/chirp/" +c1.getId()).
+		delete("/chirp/" + c1.getId() + "/" + com1.getId()).
 		then().
 		statusCode(404);
-
 	}
-
+	
 }

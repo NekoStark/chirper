@@ -7,12 +7,11 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.ChirpDao;
-import it.unifi.ing.chirper.dao.CommentDao;
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.services.endpoints.delegates.ChirpEndpointTestDelegate;
 import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 
-public class ChirpEndpointUnitTest  extends ServiceUnitTest {
+public class ChirpEndpointUnitTest extends ServiceUnitTest {
 
 	private ChirpEndpointTestDelegate chirpEndpointTest;
 	
@@ -22,7 +21,6 @@ public class ChirpEndpointUnitTest  extends ServiceUnitTest {
 		chirpEndpointTest.init(entityManager);
 		chirpEndpointTest.insertData();
 	}
-	
 	
 	@Test
 	public void testGet() {
@@ -46,41 +44,16 @@ public class ChirpEndpointUnitTest  extends ServiceUnitTest {
 		chirpEndpointTest.testDel();
 	}
 	
-	
-	@Test
-	public void testComment() {
-		chirpEndpointTest.testComment();
-	}
-
-	@Test
-	public void testAddComment() {
-		chirpEndpointTest.testAddComment();
-	}
-
-	@Test
-	public void testeditComment() {
-		chirpEndpointTest.testeditComment();
-	}
-
-	@Test
-	public void testDelete() {
-		chirpEndpointTest.testDelete();
-	}
-
-
 	@Override
 	protected Set<Object> getEndpoints() throws IllegalAccessException {
 		ChirpDao chirpDao = new ChirpDao();
 		FieldUtils.writeField(chirpDao, "entityManager", entityManager, true);
 		UserDao userDao = new UserDao();
 		FieldUtils.writeField(userDao, "entityManager", entityManager, true);
-		CommentDao commentDao = new CommentDao();
-		FieldUtils.writeField(commentDao, "entityManager", entityManager, true);
 		
 		ChirpEndpoint chirpEndpoint = new ChirpEndpoint();
 		FieldUtils.writeField(chirpEndpoint, "chirpDao", chirpDao, true);
 		FieldUtils.writeField(chirpEndpoint, "userDao", userDao, true);
-		FieldUtils.writeField(chirpEndpoint, "commentDao", commentDao, true);
 		
 		return Collections.singleton(chirpEndpoint);
 	}

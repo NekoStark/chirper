@@ -11,6 +11,12 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.11.Final</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>it.unifi.ing</groupId>
 			<artifactId>chirper-test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -19,20 +25,6 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.19.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
@@ -43,11 +35,15 @@
 							<name>mysql</name>
 							<run>
 								<ports>
-									<port>3306:3306</port>
+									<port>3307:3306</port>
 								</ports>
 								<env>
 									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
 								</env>
+								<wait>
+									<log>socket: '/var/run/mysqld/mysqld.sock'  port: 3306</log>
+									<time>20000</time>
+								</wait>
 							</run>
 						</image>
 					</images>
@@ -70,7 +66,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
