@@ -37,6 +37,6 @@ public abstract class JpaTest {
 	
 	protected abstract String getPersistenceUnitName();
 
-	protected abstract void initTest() throws Exception;
+	protected abstract void initTest() throws JpaTestInitializationException;
 	
 }

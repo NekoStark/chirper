@@ -4,15 +4,21 @@ import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegates.CommentDaoDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaIT;
+import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 
 public class CommentDaoJpaIT extends JpaIT {
 	private CommentDaoDelegate commentDaoTest;
 
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		commentDaoTest = new CommentDaoDelegate();
 
-		commentDaoTest.init(entityManager);
+		try {
+			commentDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+		
 		commentDaoTest.insertData(entityManager);
 	}
 
