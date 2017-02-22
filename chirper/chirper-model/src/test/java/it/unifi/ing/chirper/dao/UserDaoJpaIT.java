@@ -35,4 +35,11 @@ private UserDaoTestDelegate userDaoTest;
 	public void testDeleteUser() {
 		userDaoTest.testDeleteUser();
 	}
+
+	@Test
+	public void testAllUser() {
+		userDaoTest.testAllUser();
+	}
+	
+	
 }

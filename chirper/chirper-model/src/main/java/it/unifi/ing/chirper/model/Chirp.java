@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name="chirps")
 public class Chirp extends BaseEntity{
@@ -58,7 +60,7 @@ public class Chirp extends BaseEntity{
 	public void setReference(Chirp reference) {
 		this.reference = reference;
 	}
-	
+	@JsonIgnore
 	public List<Comment> getComments() {
 		return Collections.unmodifiableList( comments );
 	}

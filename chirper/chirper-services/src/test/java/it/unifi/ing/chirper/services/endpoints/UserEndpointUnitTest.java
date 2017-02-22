@@ -13,7 +13,6 @@ import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 public class UserEndpointUnitTest extends ServiceUnitTest {
 
 	private UserEndpointTestDelegate userEndpointTest;
-//	private UserEndpoint userEndpoint;
 	
 	@Override
 	public void initTest() throws Exception {
@@ -22,7 +21,7 @@ public class UserEndpointUnitTest extends ServiceUnitTest {
 		userEndpointTest.insertData();
 	}
 	
-//	@Test
+	@Test
 	public void testQuery() {
 		userEndpointTest.testQuery();
 	}
@@ -30,6 +29,23 @@ public class UserEndpointUnitTest extends ServiceUnitTest {
 	@Test
 	public void testGet() {
 		userEndpointTest.testGet();
+	}
+	
+	@Test
+	public void testSet(){
+		userEndpointTest.testSet();
+	}
+	
+	
+	@Test
+	public void testNew() {
+		userEndpointTest.testNew();
+	}
+	
+	
+	@Test
+	public void testDel() {
+		userEndpointTest.testDel();
 	}
 
 	@Override

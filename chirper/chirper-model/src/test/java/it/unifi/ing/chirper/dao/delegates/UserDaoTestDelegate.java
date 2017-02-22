@@ -57,6 +57,10 @@ public class UserDaoTestDelegate {
 		assertNull(chirpDao.findById(chirpId));
 	}
 
+	
+	public void testAllUser(){
+		assertEquals(2, userDao.allUser().size());
+	}
 
 	public void init(EntityManager entityManager) throws IllegalAccessException {
 		userDao = new UserDao();
@@ -65,7 +69,7 @@ public class UserDaoTestDelegate {
 		FieldUtils.writeDeclaredField(userDao, "entityManager", entityManager, true);
 		FieldUtils.writeDeclaredField(chirpDao, "entityManager", entityManager, true);
 	}
-
+	
 	public void insertData(EntityManager entityManager) {
 		User user = ModelFactory.user();
 

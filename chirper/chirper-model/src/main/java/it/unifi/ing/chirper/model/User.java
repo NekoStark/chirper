@@ -72,6 +72,7 @@ public class User extends BaseEntity{
 	private String encrypt(String plainPassword) {
 		return UserPasswordTools.encrypt( plainPassword );
 	}
+	@JsonIgnore
 	public Set<User> getFriends() {
 		return Collections.unmodifiableSet( friends );
 	}
@@ -88,6 +89,7 @@ public class User extends BaseEntity{
 	public void clearFriends(){
 		friends.clear();
 	}
+	@JsonIgnore
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList( chirps );
 	}

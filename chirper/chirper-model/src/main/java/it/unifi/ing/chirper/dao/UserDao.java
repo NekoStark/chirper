@@ -35,5 +35,11 @@ public class UserDao {
 				.setParameter("uUsr", username)
 				.getResultList();
 	}
+	
+	public List<User> allUser() {
+		return entityManager
+				.createQuery("from User ", User.class)
+				.getResultList();
+	}
 
 }

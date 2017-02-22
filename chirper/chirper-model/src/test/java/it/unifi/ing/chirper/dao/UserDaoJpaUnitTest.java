@@ -36,5 +36,11 @@ public class UserDaoJpaUnitTest extends JpaUnitTest {
 	public void testDeleteUser() {
 		userDaoTest.testDeleteUser();
 	}
+	
+	
+	@Test
+	public void testAllUser() {
+		userDaoTest.testAllUser();
+	}
 
 }
