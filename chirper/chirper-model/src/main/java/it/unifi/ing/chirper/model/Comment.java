@@ -17,7 +17,6 @@ public class Comment extends BaseEntity{
 
 	private String content;
 	
-	
 	Comment() {}
 	
 	public Comment(String uuid) {

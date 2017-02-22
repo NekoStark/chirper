@@ -52,12 +52,12 @@ public class CommentEndpoint {
 		try{
 			Chirp chirp = chirpDao.findById(chirpId);
 			User author = userDao.findById(userId);
-//			System.out.println(chirp.getComments().size());
+			
 			Comment comment = ModelFactory.comment();
+			commentDao.save(comment);
 			
 			comment.setAuthor(author);
 			comment.setChirp(chirp);
-			commentDao.save(comment);
 			return Response.status(200).entity(comment).build();
 		}catch (Exception e) {
 			return Response.status(404).build();

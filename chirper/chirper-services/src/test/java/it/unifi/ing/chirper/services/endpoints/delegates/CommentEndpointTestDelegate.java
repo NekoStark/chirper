@@ -42,7 +42,6 @@ public class CommentEndpointTestDelegate {
 		com2.setAuthor(u1);
 		com2.setContent("content");
 		com2.setChirp(c1);
-
 		
 		entityManager.persist(c1);
 		entityManager.persist(u1);
@@ -73,6 +72,8 @@ public class CommentEndpointTestDelegate {
 		.assertThat()
 		.body(
 				"size()", is(3));
+		
+		//controllare che facendo il get del messaggio col nuovo id, ha settato l'autore e il contenuto
 	}
 
 	public void testSet(){
@@ -86,7 +87,6 @@ public class CommentEndpointTestDelegate {
 		given().
 		when().
 		delete("/chirp/" + c1.getId() + "/" + com1.getId());
-
 
 		given().
 		when().

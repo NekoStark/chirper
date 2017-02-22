@@ -49,13 +49,11 @@ public class UserEndpoint {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id")Long userId) {
-		
 		User result = userDao.findById(userId);
 		
 		if(result == null){
 			return Response.status(404).build();
 		}
-		
 		
 		return Response.status(200).entity(result).build();
 	}
