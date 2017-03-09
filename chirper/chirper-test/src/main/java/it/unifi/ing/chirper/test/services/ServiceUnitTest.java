@@ -23,7 +23,7 @@ public abstract class ServiceUnitTest extends ServiceTest {
 		super.setUp();
 		
 		server = new TJWSEmbeddedJaxrsServer();
-		server.setPort(12345);
+		server.setPort(PORT);
 		for(Object endpoint : getEndpoints()) {
 			server.getDeployment().getResources().add( endpoint );
 		}
