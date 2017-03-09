@@ -39,6 +39,107 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Using env.test.properties</echo>
+								<copy
+									file="${project.build.directory}/${project.build.finalName}.war"
+									tofile="${basedir}/docker/wildfly/${project.artifactId}.war" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.17.2</version>
+				<configuration>
+					<images>
+						<image>
+							<name>mysqldb</name>
+							<build>
+								<dockerFileDir>${project.basedir}/docker/mysql</dockerFileDir>
+							</build>
+							<run>
+								<ports>
+									<port>3307:3306</port>
+								</ports>
+								<env>
+									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
+								</env>
+								<wait>
+									<time>50000</time>
+									<log>mysqld: ready for connections</log>
+								</wait>
+							</run>
+						</image>
+						<image>
+							<name>wildfly-test</name>
+							<build>
+								<dockerFileDir>${project.basedir}/docker/wildfly</dockerFileDir>
+							</build>
+							<run>
+								<ports>
+									<port>8080:8080</port>
+								</ports>
+								<dependsOn>mysqldb</dependsOn>
+								<links>
+									<link>mysqldb:database</link>
+								</links>
+								<cmd>
+									<shell>./wait-for-it.sh -t 0 database:3306 --
+										/opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0</shell>
+								</cmd>
+								<wait>
+									<http>
+									<url>http://localhost:8080</url>
+									<method>GET</method>
+									<status>200</status>
+									</http>
+									<time>50000</time>
+									<time>50000</time>
+									<log>Deployed</log>
+								</wait>
+							</run>
+						</image>
+					</images>
+					<showLogs>true</showLogs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>docker:build</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker:start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker:stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

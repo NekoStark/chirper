@@ -1,0 +1,17 @@
+version: '2'
+services:
+  mysqldb:
+    build: mysql/
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  wildfly-test:
+    build: wildfly/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb:database
+    command: ["./wait-for-it.sh", "-t", "0", "database:3306", "--", "/opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0"]

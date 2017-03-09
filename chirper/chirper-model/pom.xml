@@ -41,8 +41,8 @@
 									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
 								</env>
 								<wait>
+									<time>50000</time>
 									<log>socket: '/var/run/mysqld/mysqld.sock'  port: 3306</log>
-									<time>20000</time>
 								</wait>
 							</run>
 						</image>
