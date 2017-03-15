@@ -8,6 +8,10 @@
     <persistence-unit name="production">
 		<jta-data-source>chirpDS</jta-data-source> 
 		
+		<class>it.unifi.ing.chirper.model.User</class>
+		<class>it.unifi.ing.chirper.model.Chirp</class>
+		<class>it.unifi.ing.chirper.model.Comment</class>
+		
         <properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
             <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -21,5 +25,9 @@
             <property name="hibernate.id.new_generator_mappings" value="true" />
         </properties>
     </persistence-unit>
+    
+   
+
+ 
     
 </persistence>

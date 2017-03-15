@@ -1,6 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -37,6 +38,7 @@ public class CommentEndpoint {
 	@GET
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response getComment(@PathParam("id")Long chirpId){
 		Chirp chirp = chirpDao.findById(chirpId);
 		if(chirp == null){
@@ -48,6 +50,7 @@ public class CommentEndpoint {
 	@POST
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response newComment(@PathParam("id")Long chirpId, @HeaderParam("userId")Long userId, @HeaderParam("content") String content){
 		if(StringUtils.isEmpty(content)){
 			return Response.status(500).build();
@@ -73,6 +76,7 @@ public class CommentEndpoint {
 	@PUT
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response editComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId, @HeaderParam("content") String content){
 		if(StringUtils.isEmpty(content)){
 			return Response.status(500).build();
@@ -91,6 +95,7 @@ public class CommentEndpoint {
 	@DELETE
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response deleteComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId){
 		Comment comment = commentDao.findById(commentId);
 		if(comment == null){

@@ -1,6 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,6 +33,7 @@ public class ChirpEndpoint {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response newChirp(@HeaderParam("userId") Long userId,@HeaderParam("content") String content ) {		
 		if(StringUtils.isEmpty(content)){
 			return Response.status(500).build();
@@ -51,6 +53,7 @@ public class ChirpEndpoint {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response get(@PathParam("id")Long chirpId) {
 		Chirp result = chirpDao.findById(chirpId);
 		if(result == null){		
@@ -63,6 +66,7 @@ public class ChirpEndpoint {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response set(@PathParam("id")Long chirpId,@HeaderParam("content") String content) {
 		if(StringUtils.isEmpty(content)){
 			return Response.status(500).build();
@@ -79,6 +83,7 @@ public class ChirpEndpoint {
 
 	@DELETE
 	@Path("/{id}")
+	@Transactional
 	public Response delete(@PathParam("id")Long chirpId) {
 		Chirp chirp = chirpDao.findById(chirpId);
 		

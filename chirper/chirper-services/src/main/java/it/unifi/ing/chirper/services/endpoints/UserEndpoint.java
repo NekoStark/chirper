@@ -1,6 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,6 +28,7 @@ public class UserEndpoint {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response query() {
 		return Response.status(200).entity(userDao.allUser()).build();
 	}
@@ -51,6 +53,7 @@ public class UserEndpoint {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response get(@PathParam("id")Long userId) {
 		User result = userDao.findById(userId);
 		
@@ -65,6 +68,7 @@ public class UserEndpoint {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response set(@PathParam("id")Long userId, @HeaderParam("username") String username, @HeaderParam("email") String email, @HeaderParam("password") String password) {
 		User result = userDao.findById(userId);
 		if(result == null){
@@ -88,6 +92,7 @@ public class UserEndpoint {
 	
 	@DELETE
 	@Path("/{id}")
+	@Transactional
 	public Response delete(@PathParam("id")Long userId) {
 		User user = userDao.findById(userId);
 		if(user == null){

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,7 +24,7 @@ public class Chirp extends BaseEntity{
 	@ManyToOne @JoinColumn(name="reference")
 	private Chirp reference;
 	
-	@OneToMany(mappedBy="chirp", cascade=CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="chirp", cascade=CascadeType.REMOVE)
 	private List<Comment> comments;
 	
 	private String content;
