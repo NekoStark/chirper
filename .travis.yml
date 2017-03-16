@@ -5,6 +5,9 @@ jdk:
 sudo: false
 install: true
 
+services:
+  - docker
+
 addons:
   sonarqube:
     token:
