@@ -91,8 +91,9 @@ public class User extends BaseEntity {
 	}
 
 	public void removeFriend(User user) {
-		friends.remove(user);
-
+		if (friends.remove(user)) {
+			user.friends.remove(this);
+		}
 	}
 
 	public void clearFriends() {
