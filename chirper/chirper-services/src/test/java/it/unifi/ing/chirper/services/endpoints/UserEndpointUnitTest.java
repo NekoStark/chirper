@@ -22,11 +22,6 @@ public class UserEndpointUnitTest extends ServiceUnitTest {
 	}
 	
 	@Test
-	public void testQuery() {
-		testDelegate.testQuery();
-	}
-
-	@Test
 	public void testGet() {
 		testDelegate.testGet();
 	}

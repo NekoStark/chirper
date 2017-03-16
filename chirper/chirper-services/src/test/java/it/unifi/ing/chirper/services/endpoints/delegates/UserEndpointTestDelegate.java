@@ -4,8 +4,6 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
@@ -17,19 +15,6 @@ public class UserEndpointTestDelegate {
 
 	private EntityManager entityManager;
 	private User u1, u2;
-
-	public void testQuery() {
-		//@formatter:off
-		get("/users")
-			.then()
-			.assertThat()
-			.body(
-				"size()", is(2), 
-				"uuid", hasItems(u1.getUuid(), u2.getUuid())
-			)
-			.statusCode(200);
-		//@formatter:on
-	}
 
 	public void testGet() {
 		//@formatter:off

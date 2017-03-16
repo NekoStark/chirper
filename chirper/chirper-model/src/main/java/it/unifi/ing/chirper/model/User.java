@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -22,7 +23,7 @@ import it.unifi.ing.chirper.model.utils.password.UserPasswordTools;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> friends;
 

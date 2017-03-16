@@ -17,11 +17,6 @@ public class UserEndpointIT extends ServiceIT {
 	}
 
 	@Test
-	public void testQuery() {
-		testDelegate.testQuery();
-	}
-
-	@Test
 	public void testGet() {
 		testDelegate.testGet();
 	}

@@ -27,13 +27,6 @@ public class UserEndpoint {
 	private UserDao userDao;
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Transactional
-	public Response query() {
-		return Response.status(200).entity(userDao.allUser()).build();
-	}
-
-	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
@@ -49,6 +42,7 @@ public class UserEndpoint {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	public Response add(@HeaderParam("username") String username, @HeaderParam("email") String email,
 			@HeaderParam("password") String password) {
 		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
