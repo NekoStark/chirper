@@ -31,15 +31,27 @@ public class ChirpEndpoint {
 	@Inject
 	private UserDao userDao;
 
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
+	public Response get(@PathParam("id") Long chirpId) {
+		Chirp result = chirpDao.findById(chirpId);
+		if (result == null) {
+			return Response.status(404).build();
+		}
+		return Response.status(200).entity(result).build();
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response newChirp(@HeaderParam("userId") Long userId,@HeaderParam("content") String content ) {		
-		if(StringUtils.isEmpty(content)){
+	public Response add(@HeaderParam("userId") Long userId, @HeaderParam("content") String content) {
+		if (StringUtils.isEmpty(content)) {
 			return Response.status(500).build();
 		}
 		User author = userDao.findById(userId);
-		if(author == null){
+		if (author == null) {
 			return Response.status(404).build();
 		}
 
@@ -50,30 +62,17 @@ public class ChirpEndpoint {
 		return Response.status(200).entity(chirp).build();
 	}
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Transactional
-	public Response get(@PathParam("id")Long chirpId) {
-		Chirp result = chirpDao.findById(chirpId);
-		if(result == null){		
-			return Response.status(404).build();
-		}
-		return Response.status(200).entity(result).build();
-	}
-
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response set(@PathParam("id")Long chirpId,@HeaderParam("content") String content) {
-		if(StringUtils.isEmpty(content)){
+	public Response update(@PathParam("id") Long chirpId, @HeaderParam("content") String content) {
+		if (StringUtils.isEmpty(content)) {
 			return Response.status(500).build();
 		}
 
 		Chirp chirp = chirpDao.findById(chirpId);
-		if(chirp == null){
+		if (chirp == null) {
 			return Response.status(404).build();
 		}
 		chirp.setContent(content);
@@ -84,12 +83,12 @@ public class ChirpEndpoint {
 	@DELETE
 	@Path("/{id}")
 	@Transactional
-	public Response delete(@PathParam("id")Long chirpId) {
+	public Response delete(@PathParam("id") Long chirpId) {
 		Chirp chirp = chirpDao.findById(chirpId);
-		
-		if(chirp == null){
+
+		if (chirp == null) {
 			return Response.status(404).build();
-			
+
 		}
 		chirpDao.delete(chirp);
 		return Response.status(200).build();

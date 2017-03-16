@@ -13,35 +13,53 @@ import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 
 public class ChirpEndpointUnitTest extends ServiceUnitTest {
 
-	private ChirpEndpointTestDelegate chirpEndpointTest;
-	
+	private ChirpEndpointTestDelegate testDelegate;
+
 	@Override
 	public void initTest() throws Exception {
-		chirpEndpointTest = new ChirpEndpointTestDelegate();
-		chirpEndpointTest.init(entityManager);
-		chirpEndpointTest.insertData();
+		testDelegate = new ChirpEndpointTestDelegate();
+		testDelegate.init(entityManager);
+		testDelegate.insertData();
 	}
-	
+
 	@Test
 	public void testGet() {
-		chirpEndpointTest.testGet();
+		testDelegate.testGet();
 	}
-	
+
 	@Test
-	public void testSet(){
-		chirpEndpointTest.testSet();
+	public void testGetNotFound() {
+		testDelegate.testGetNotFound();
 	}
-	
-	
+
 	@Test
-	public void testNew() {
-		chirpEndpointTest.testNew();
+	public void testAdd() {
+		testDelegate.testAdd();
 	}
-	
-	
+
 	@Test
-	public void testDel() {
-		chirpEndpointTest.testDel();
+	public void testAddToBadUser() {
+		testDelegate.testAddToBadUser();
+	}
+
+	@Test
+	public void testAddNoContent() {
+		testDelegate.testAddNoContent();
+	}
+
+	@Test
+	public void testUpdate() {
+		testDelegate.testUpdate();
+	}
+
+	@Test
+	public void testUpdateNoContent() {
+		testDelegate.testUpdateNoContent();
+	}
+
+	@Test
+	public void testDelete() {
+		testDelegate.testDelete();
 	}
 	
 	@Override
@@ -50,11 +68,11 @@ public class ChirpEndpointUnitTest extends ServiceUnitTest {
 		FieldUtils.writeField(chirpDao, "entityManager", entityManager, true);
 		UserDao userDao = new UserDao();
 		FieldUtils.writeField(userDao, "entityManager", entityManager, true);
-		
+
 		ChirpEndpoint chirpEndpoint = new ChirpEndpoint();
 		FieldUtils.writeField(chirpEndpoint, "chirpDao", chirpDao, true);
 		FieldUtils.writeField(chirpEndpoint, "userDao", userDao, true);
-		
+
 		return Collections.singleton(chirpEndpoint);
 	}
 

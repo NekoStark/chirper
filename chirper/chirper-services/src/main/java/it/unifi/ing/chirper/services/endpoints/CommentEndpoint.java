@@ -39,9 +39,9 @@ public class CommentEndpoint {
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response getComment(@PathParam("id")Long chirpId){
+	public Response query(@PathParam("id") Long chirpId) {
 		Chirp chirp = chirpDao.findById(chirpId);
-		if(chirp == null){
+		if (chirp == null) {
 			return Response.status(404).build();
 		}
 		return Response.status(200).entity(chirp.getComments()).build();
@@ -51,15 +51,16 @@ public class CommentEndpoint {
 	@Path("/{id}/comments")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response newComment(@PathParam("id")Long chirpId, @HeaderParam("userId")Long userId, @HeaderParam("content") String content){
-		if(StringUtils.isEmpty(content)){
+	public Response add(@PathParam("id") Long chirpId, @HeaderParam("userId") Long userId,
+			@HeaderParam("content") String content) {
+		if (StringUtils.isEmpty(content)) {
 			return Response.status(500).build();
 		}
 
 		Chirp chirp = chirpDao.findById(chirpId);
 		User author = userDao.findById(userId);
 
-		if(chirp == null || author == null){
+		if (chirp == null || author == null) {
 			return Response.status(404).build();
 		}
 
@@ -72,19 +73,20 @@ public class CommentEndpoint {
 
 	}
 
-
 	@PUT
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response editComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId, @HeaderParam("content") String content){
-		if(StringUtils.isEmpty(content)){
+	public Response update(@PathParam("id") Long chirpId, @PathParam("cid") Long commentId,
+			@HeaderParam("content") String content) {
+		if (StringUtils.isEmpty(content)) {
 			return Response.status(500).build();
 		}
 
+		Chirp chirp = chirpDao.findById(chirpId);
 		Comment comment = commentDao.findById(commentId);
 
-		if(comment == null){
+		if (chirp == null || comment == null) {
 			return Response.status(404).build();
 		}
 
@@ -96,9 +98,9 @@ public class CommentEndpoint {
 	@Path("/{id}/comments/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response deleteComment(@PathParam("id")Long chirpId, @PathParam("cid")Long commentId){
+	public Response delete(@PathParam("id") Long chirpId, @PathParam("cid") Long commentId) {
 		Comment comment = commentDao.findById(commentId);
-		if(comment == null){
+		if (comment == null) {
 			return Response.status(404).build();
 		}
 		commentDao.delete(comment);

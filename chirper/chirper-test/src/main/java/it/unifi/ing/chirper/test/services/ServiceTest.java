@@ -7,7 +7,6 @@ import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.Before;
 
-//FIXME rifattorizzare
 public abstract class ServiceTest {
 
 	protected EntityManagerFactory entityManagerFactory;

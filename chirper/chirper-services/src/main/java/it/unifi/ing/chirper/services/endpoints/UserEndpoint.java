@@ -25,81 +25,79 @@ public class UserEndpoint {
 
 	@Inject
 	private UserDao userDao;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
 	public Response query() {
 		return Response.status(200).entity(userDao.allUser()).build();
 	}
-	
+
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
+	public Response get(@PathParam("id") Long userId) {
+		User result = userDao.findById(userId);
+
+		if (result == null) {
+			return Response.status(404).build();
+		}
+
+		return Response.status(200).entity(result).build();
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response newUser(@HeaderParam("username") String username, @HeaderParam("email") String email, @HeaderParam("password") String password) {		
-		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
+	public Response add(@HeaderParam("username") String username, @HeaderParam("email") String email,
+			@HeaderParam("password") String password) {
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
 			return Response.status(500).build();
 		}
-	
-		
+
 		User result = ModelFactory.user();
 		result.setUserName(username);
 		result.setEmail(email);
 		result.setPassword(password);
 		userDao.save(result);
-		return Response.status(200).entity(result).build();
-		
-	}
-	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Transactional
-	public Response get(@PathParam("id")Long userId) {
-		User result = userDao.findById(userId);
-		
-		if(result == null){
-			return Response.status(404).build();
-		}
-		
+
 		return Response.status(200).entity(result).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
-	public Response set(@PathParam("id")Long userId, @HeaderParam("username") String username, @HeaderParam("email") String email, @HeaderParam("password") String password) {
+	public Response update(@PathParam("id") Long userId, @HeaderParam("username") String username,
+			@HeaderParam("email") String email, @HeaderParam("password") String password) {
 		User result = userDao.findById(userId);
-		if(result == null){
+		if (result == null) {
 			return Response.status(404).build();
 		}
-		if(!StringUtils.isEmpty(username)){
+		if (!StringUtils.isEmpty(username)) {
 			result.setUserName(username);
 		}
-		if(!StringUtils.isEmpty(email)){
+		if (!StringUtils.isEmpty(email)) {
 			result.setEmail(email);
 		}
-		if(!StringUtils.isEmpty( password )){
+		if (!StringUtils.isEmpty(password)) {
 			result.setPassword(password);
 		}
-		
+
 		return Response.status(200).entity(result).build();
 	}
-	
-	
-	
-	
+
 	@DELETE
 	@Path("/{id}")
 	@Transactional
-	public Response delete(@PathParam("id")Long userId) {
+	public Response delete(@PathParam("id") Long userId) {
 		User user = userDao.findById(userId);
-		if(user == null){
+		if (user == null) {
 			return Response.status(404).build();
 		}
-		userDao.delete(user);	
+		userDao.delete(user);
 		return Response.status(200).build();
 	}
-	
+
 }

@@ -5,33 +5,48 @@ import org.junit.Test;
 import it.unifi.ing.chirper.services.endpoints.delegates.CommentEndpointTestDelegate;
 import it.unifi.ing.chirper.test.services.ServiceIT;
 
-public class CommentEndpointIT extends ServiceIT{
-	private CommentEndpointTestDelegate commentEndpointIT;
+public class CommentEndpointIT extends ServiceIT {
+	private CommentEndpointTestDelegate testDelegate;
 
 	@Override
 	public void initTest() throws Exception {
-		commentEndpointIT = new CommentEndpointTestDelegate();
-		commentEndpointIT.init(entityManager);
-		commentEndpointIT.insertData();
+		testDelegate = new CommentEndpointTestDelegate();
+		testDelegate.init(entityManager);
+		testDelegate.insertData();
 	}
 
 	@Test
-	public void testGet() {
-		commentEndpointIT.testGet();
+	public void testQuery() {
+		testDelegate.testQuery();
 	}
 
 	@Test
-	public void testSet(){
-		commentEndpointIT.testSet();
+	public void testQueryWrongId() {
+		testDelegate.testQueryWrongId();
 	}
 
 	@Test
-	public void testNew() {
-		commentEndpointIT.testNew();
+	public void testAdd() {
+		testDelegate.testAdd();
 	}
 
 	@Test
-	public void testDel() {
-		commentEndpointIT.testDel();
+	public void testAddNoContent() {
+		testDelegate.testAddNoContent();
+	}
+
+	@Test
+	public void testUpdate() {
+		testDelegate.testUpdate();
+	}
+
+	@Test
+	public void testUpdateWrongIds() {
+		testDelegate.testUpdateWrongIds();
+	}
+
+	@Test
+	public void testDelete() {
+		testDelegate.testDelete();
 	}
 }

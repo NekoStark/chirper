@@ -5,37 +5,54 @@ import org.junit.Test;
 import it.unifi.ing.chirper.services.endpoints.delegates.ChirpEndpointTestDelegate;
 import it.unifi.ing.chirper.test.services.ServiceIT;
 
-public class ChirpEndpointIT extends ServiceIT{
-	private ChirpEndpointTestDelegate chirpEndpointIT;
+public class ChirpEndpointIT extends ServiceIT {
+	private ChirpEndpointTestDelegate testDelegate;
 
 	@Override
 	public void initTest() throws Exception {
-		chirpEndpointIT = new ChirpEndpointTestDelegate();
-		chirpEndpointIT.init(entityManager);
-		chirpEndpointIT.insertData();
+		testDelegate = new ChirpEndpointTestDelegate();
+		testDelegate.init(entityManager);
+		testDelegate.insertData();
 	}
 
 	@Test
 	public void testGet() {
-		chirpEndpointIT.testGet();
+		testDelegate.testGet();
 	}
 
 	@Test
-	public void testSet(){
-		chirpEndpointIT.testSet();
+	public void testGetNotFound() {
+		testDelegate.testGetNotFound();
 	}
-
 
 	@Test
-	public void testNew() {
-		chirpEndpointIT.testNew();
+	public void testAdd() {
+		testDelegate.testAdd();
 	}
-
 
 	@Test
-	public void testDel() {
-		chirpEndpointIT.testDel();
+	public void testAddToBadUser() {
+		testDelegate.testAddToBadUser();
 	}
 
-	
+	@Test
+	public void testAddNoContent() {
+		testDelegate.testAddNoContent();
+	}
+
+	@Test
+	public void testUpdate() {
+		testDelegate.testUpdate();
+	}
+
+	@Test
+	public void testUpdateNoContent() {
+		testDelegate.testUpdateNoContent();
+	}
+
+	@Test
+	public void testDelete() {
+		testDelegate.testDelete();
+	}
+
 }

@@ -22,6 +22,120 @@ public class CommentEndpointTestDelegate {
 	private Comment com1;
 	private Comment com2;
 
+	public void testQuery() {
+		//@formatter:off
+		get("/chirp/" + c1.getId() + "/comments")
+			.then()
+			.assertThat()
+			.body(
+				"size()", is(2), 
+				"uuid", hasItems(com1.getUuid(), com2.getUuid())
+			)
+			.statusCode(200);
+		//@formatter:on
+	}
+	
+	public void testQueryWrongId() {
+		//@formatter:off
+		get("/chirp/999/comments")
+			.then()
+			.assertThat()
+			.statusCode(404);
+		//@formatter:on
+	}
+
+	public void testAdd() {
+		//@formatter:off
+		given()
+			.header("userId", u1.getId())
+			.header("content", "newContent")
+			.when()
+			.post("/chirp/" + c1.getId() + "/comments")
+			.then()
+			.assertThat()
+			.body("author.uuid", is(u1.getUuid()))
+			.statusCode(200);
+
+		get("/chirp/" + c1.getId() + "/comments")
+			.then()
+			.assertThat()
+			.body("size()", is(3))
+			.statusCode(200);
+		//@formatter:on
+	}
+	
+	public void testAddNoContent() {
+		//@formatter:off
+		given()
+			.header("userId", u1.getId())
+			.header("content", "")
+			.when()
+			.post("/chirp/" + c1.getId() + "/comments")
+			.then()
+			.assertThat()
+			.statusCode(500);
+		//@formatter:on
+	}
+
+	public void testUpdate() {
+		//@formatter:off
+		given()
+			.header("content", "newContent")
+			.when()
+			.put("/chirp/" + c1.getId() + "/comments/" + com1.getId())
+			.then()
+			.assertThat()
+			.body("content", is("newContent"))
+			.statusCode(200);
+
+		given()
+			.header("content", "")
+			.when()
+			.put("/chirp/" + c1.getId() + "/comments/" + com1.getId())
+			.then()
+			.assertThat()
+			.statusCode(500);
+		//@formatter:on
+	}
+	
+	public void testUpdateWrongIds() {
+		//@formatter:off
+		given()
+			.header("content", "newContent")
+			.when()
+			.put("/chirp/999/comments/"+com1.getId())
+			.then()
+			.assertThat()
+			.statusCode(404);
+		
+		given()
+			.header("content", "newContent")
+			.when()
+			.put("/chirp/"+ c1.getId() +"/comments/999")
+			.then()
+			.assertThat()
+			.statusCode(404);
+		//@formatter:on
+	}
+
+	public void testDelete() {
+		//@formatter:off
+		given()
+			.when()
+			.delete("/chirp/" + c1.getId() + "/" + com1.getId());
+
+		given()
+			.when()
+			.delete("/chirp/" + c1.getId() + "/" + com1.getId())
+			.then()
+			.statusCode(404);
+		//@formatter:on
+	}
+
+	//
+	// TEST INIT METHODS
+	//
+
 	public void init(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
@@ -48,96 +162,4 @@ public class CommentEndpointTestDelegate {
 		entityManager.persist(com1);
 		entityManager.persist(com2);
 	}
-
-	public void testGet(){
-		get("/chirp/" + c1.getId() + "/comments").
-		then().
-		assertThat().
-		body(
-				"size()", is(2),
-				"uuid", hasItems(com1.getUuid(), com2.getUuid())).
-		statusCode(200);
-
-		get("/chirp/999/comments").
-		then().
-		assertThat().
-		statusCode(404);
-	}
-
-	public void testNew(){
-		given().
-		header("userId", u1.getId()).
-		header("content", "newContent").
-		when().
-		post("/chirp/" + c1.getId() + "/comments").
-		then().
-		assertThat().
-		body(
-				"author.uuid", is(u1.getUuid())).
-		statusCode(200);
-
-
-		get("/chirp/" + c1.getId() + "/comments").
-		then().
-		assertThat().
-		body(
-				"size()", is(3)).
-		statusCode(200);
-		
-		
-		given().
-		header("userId", u1.getId()).
-		header("content", "").
-		when().
-		post("/chirp/" + c1.getId() + "/comments").
-		then().
-		assertThat().
-		statusCode(500);
-	}
-
-	public void testSet(){
-		given().
-		header("content", "newContent").
-		when().
-		put("/chirp/" + c1.getId() + "/comments/" + com1.getId()).
-		then().
-		assertThat().
-		body(
-				"content", is("newContent")).
-		statusCode(200);
-		
-		
-		given().
-		header("content", "").
-		when().
-		put("/chirp/" + c1.getId() + "/comments/" + com1.getId()).
-		then().
-		assertThat().
-		statusCode(500);
-		
-		
-		
-		given().
-		header("content", "newContent").
-		when().
-		put("/chirp/999/comments/999").
-		then().
-		assertThat().
-		statusCode(404);
-		
-
-	}
-
-	public void testDel(){
-		given().
-		when().
-		delete("/chirp/" + c1.getId() + "/" + com1.getId());
-
-		given().
-		when().
-		delete("/chirp/" + c1.getId() + "/" + com1.getId()).
-		then().
-		statusCode(404);
-	}
-
 }

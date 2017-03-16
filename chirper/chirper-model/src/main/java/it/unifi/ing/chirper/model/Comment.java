@@ -6,33 +6,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="comments")
-public class Comment extends BaseEntity{
+@Table(name = "comments")
+public class Comment extends BaseEntity {
 
-	@ManyToOne @JoinColumn(name="author_id")
+	@ManyToOne
+	@JoinColumn(name = "author_id")
 	private User author;
-	
-	@ManyToOne @JoinColumn(name="comment")
+
+	@ManyToOne
+	@JoinColumn(name = "comment")
 	private Chirp chirp;
 
 	private String content;
-	
-	Comment() {}
-	
+
+	Comment() {
+	}
+
 	public Comment(String uuid) {
 		this.setUuid(uuid);
 	}
-	
+
 	public User getAuthor() {
 		return author;
 	}
+
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -40,9 +45,10 @@ public class Comment extends BaseEntity{
 	public Chirp getChirp() {
 		return chirp;
 	}
+
 	public void setChirp(Chirp chirp) {
 		this.chirp = chirp;
 		chirp.addComment(this);
 	}
-	
+
 }

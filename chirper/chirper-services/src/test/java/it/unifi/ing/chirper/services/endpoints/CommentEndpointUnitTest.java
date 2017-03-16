@@ -13,36 +13,51 @@ import it.unifi.ing.chirper.services.endpoints.delegates.CommentEndpointTestDele
 import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 
 public class CommentEndpointUnitTest extends ServiceUnitTest {
-	
-	private CommentEndpointTestDelegate commentEndpointTest;
-	
+
+	private CommentEndpointTestDelegate testDelegate;
+
 	@Override
 	public void initTest() throws Exception {
-		commentEndpointTest = new CommentEndpointTestDelegate();
-		commentEndpointTest.init(entityManager);
-		commentEndpointTest.insertData();
+		testDelegate = new CommentEndpointTestDelegate();
+		testDelegate.init(entityManager);
+		testDelegate.insertData();
 	}
-	
+
 	@Test
-	public void testGet() {
-		commentEndpointTest.testGet();
+	public void testQuery() {
+		testDelegate.testQuery();
 	}
-	
+
 	@Test
-	public void testSet(){
-		commentEndpointTest.testSet();
+	public void testQueryWrongId() {
+		testDelegate.testQueryWrongId();
 	}
-	
+
 	@Test
-	public void testNew() {
-		commentEndpointTest.testNew();
+	public void testAdd() {
+		testDelegate.testAdd();
 	}
-	
+
 	@Test
-	public void testDel() {
-		commentEndpointTest.testDel();
+	public void testAddNoContent() {
+		testDelegate.testAddNoContent();
 	}
-	
+
+	@Test
+	public void testUpdate() {
+		testDelegate.testUpdate();
+	}
+
+	@Test
+	public void testUpdateWrongIds() {
+		testDelegate.testUpdateWrongIds();
+	}
+
+	@Test
+	public void testDelete() {
+		testDelegate.testDelete();
+	}
+
 	@Override
 	protected Set<Object> getEndpoints() throws IllegalAccessException {
 		ChirpDao chirpDao = new ChirpDao();
@@ -51,13 +66,13 @@ public class CommentEndpointUnitTest extends ServiceUnitTest {
 		FieldUtils.writeField(userDao, "entityManager", entityManager, true);
 		CommentDao commentDao = new CommentDao();
 		FieldUtils.writeField(commentDao, "entityManager", entityManager, true);
-		
+
 		CommentEndpoint commentEndpoint = new CommentEndpoint();
 		FieldUtils.writeField(commentEndpoint, "chirpDao", chirpDao, true);
 		FieldUtils.writeField(commentEndpoint, "userDao", userDao, true);
 		FieldUtils.writeField(commentEndpoint, "commentDao", commentDao, true);
-		
+
 		return Collections.singleton(commentEndpoint);
 	}
-	
+
 }
