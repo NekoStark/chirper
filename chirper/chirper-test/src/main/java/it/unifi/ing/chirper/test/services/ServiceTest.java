@@ -30,8 +30,16 @@ public abstract class ServiceTest {
 		if (entityManager.getTransaction().isActive()) {
 			entityManager.getTransaction().rollback();
 		}
+		
+		entityManager.getTransaction().begin();
+		cleanUpDatabase();
+		entityManager.getTransaction().commit();
+		
 		entityManager.close();
 		entityManagerFactory.close();
+	}
+
+	protected void cleanUpDatabase() {
 	}
 
 	protected abstract String getPersistenceUnitName();

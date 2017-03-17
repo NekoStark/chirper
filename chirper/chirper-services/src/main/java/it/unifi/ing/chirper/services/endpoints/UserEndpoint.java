@@ -27,6 +27,13 @@ public class UserEndpoint {
 	private UserDao userDao;
 
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
+	public Response query() {
+		return Response.status(200).entity(userDao.allUser()).build();
+	}
+	
+	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional

@@ -15,6 +15,11 @@ public class UserEndpointIT extends ServiceIT {
 		testDelegate.init(entityManager);
 		testDelegate.insertData();
 	}
+	
+	@Test
+	public void testQuery() {
+		testDelegate.testQuery();
+	}
 
 	@Test
 	public void testGet() {
