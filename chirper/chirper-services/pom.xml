@@ -53,10 +53,10 @@
 							<tasks>
 								<copy
 									file="${project.build.directory}/${project.build.finalName}.war"
-									tofile="docker/wildfly/${project.artifactId}.war" />
+									tofile="${basedir}/docker/wildfly/${project.artifactId}.war" />
 								<copy
-									file="datasource/chirper-ds.xml"
-									tofile="docker/wildfly/chirper-ds.xml" />
+									file="${basedir}/datasource/chirper-ds.xml"
+									tofile="${basedir}/docker/wildfly/chirper-ds.xml" />
 							</tasks>
 						</configuration>
 					</execution>

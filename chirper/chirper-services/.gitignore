@@ -3,6 +3,5 @@
 .settings/
 .project
 .DS_Store
-/datasource/
 docker/wildfly/*.war
 docker/wildfly/*-ds.xml
