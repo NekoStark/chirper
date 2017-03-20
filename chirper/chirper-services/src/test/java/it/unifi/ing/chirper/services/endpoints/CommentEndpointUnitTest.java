@@ -42,6 +42,11 @@ public class CommentEndpointUnitTest extends ServiceUnitTest {
 	public void testAddNoContent() {
 		testDelegate.testAddNoContent();
 	}
+	
+	@Test
+	public void testAddWrongIds() {
+		testDelegate.testAddWrongIds();
+	}
 
 	@Test
 	public void testUpdate() {

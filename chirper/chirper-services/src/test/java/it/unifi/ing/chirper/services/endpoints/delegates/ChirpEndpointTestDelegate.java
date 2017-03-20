@@ -120,6 +120,17 @@ public class ChirpEndpointTestDelegate {
 			.statusCode(500);
 		//@formatter:on
 	}
+	
+	public void testUpdateWrongIds() {
+		//@formatter:off
+		given()
+			.header("content", "newContent")
+			.when()
+			.put("/chirp/9999")
+			.then()
+			.statusCode(404);
+		//@formatter:on
+	}
 
 	public void testDelete() {
 		//@formatter:off

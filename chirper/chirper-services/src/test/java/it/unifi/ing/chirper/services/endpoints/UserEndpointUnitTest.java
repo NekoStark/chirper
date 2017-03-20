@@ -13,14 +13,19 @@ import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 public class UserEndpointUnitTest extends ServiceUnitTest {
 
 	private UserEndpointTestDelegate testDelegate;
-	
+
 	@Override
 	public void initTest() throws Exception {
 		testDelegate = new UserEndpointTestDelegate();
 		testDelegate.init(entityManager);
 		testDelegate.insertData();
 	}
-	
+
+	@Test
+	public void testQuery() {
+		testDelegate.testQuery();
+	}
+
 	@Test
 	public void testGet() {
 		testDelegate.testGet();
@@ -60,10 +65,10 @@ public class UserEndpointUnitTest extends ServiceUnitTest {
 	protected Set<Object> getEndpoints() throws IllegalAccessException {
 		UserDao userDao = new UserDao();
 		FieldUtils.writeField(userDao, "entityManager", entityManager, true);
-		
+
 		UserEndpoint userEndpoint = new UserEndpoint();
 		FieldUtils.writeField(userEndpoint, "userDao", userDao, true);
-		
+
 		return Collections.singleton(userEndpoint);
 	}
 

@@ -53,9 +53,6 @@ public abstract class BaseEntity {
 		if (!(obj instanceof BaseEntity)) {
 			return false;
 		}
-		if (uuid == null) {
-			return false;
-		}
 		BaseEntity other = (BaseEntity) obj;
 		return uuid.equals(other.getUuid());
 	}

@@ -76,6 +76,28 @@ public class CommentEndpointTestDelegate {
 			.statusCode(500);
 		//@formatter:on
 	}
+	
+	public void testAddWrongIds() {
+		//@formatter:off
+		given()
+			.header("userId", "9999")
+			.header("content", "hello")
+			.when()
+			.post("/chirp/" + c1.getId() + "/comments")
+			.then()
+			.assertThat()
+			.statusCode(404);
+		
+		given()
+			.header("userId", u1.getId())
+			.header("content", "hello")
+			.when()
+			.post("/chirp/9999/comments")
+			.then()
+			.assertThat()
+			.statusCode(404);
+		//@formatter:on
+	}
 
 	public void testUpdate() {
 		//@formatter:off
@@ -122,11 +144,13 @@ public class CommentEndpointTestDelegate {
 		//@formatter:off
 		given()
 			.when()
-			.delete("/chirp/" + c1.getId() + "/" + com1.getId());
+			.delete("/chirp/" + c1.getId() + "/comments/" + com1.getId())
+			.then()
+			.statusCode(200);
 
 		given()
 			.when()
-			.delete("/chirp/" + c1.getId() + "/" + com1.getId())
+			.delete("/chirp/" + c1.getId() + "/comments/" + com1.getId())
 			.then()
 			.statusCode(404);
 		//@formatter:on
