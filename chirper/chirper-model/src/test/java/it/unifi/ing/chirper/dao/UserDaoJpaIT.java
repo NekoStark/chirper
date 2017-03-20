@@ -10,7 +10,7 @@ public class UserDaoJpaIT extends JpaIT{
 private UserDaoTestDelegate userDaoTest;
 	
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		userDaoTest = new UserDaoTestDelegate();
 
 		try {
