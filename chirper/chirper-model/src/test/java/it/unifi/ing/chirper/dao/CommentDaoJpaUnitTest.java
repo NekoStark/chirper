@@ -13,6 +13,13 @@ public class CommentDaoJpaUnitTest extends JpaUnitTest {
 	@Override
 	protected void initTest() throws JpaTestInitializationException {
 		commentDaoTest = new CommentDaoTestDelegate();
+		
+		try {
+			commentDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+		
 		commentDaoTest.insertData(entityManager);
 	}
 
