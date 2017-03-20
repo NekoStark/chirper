@@ -11,9 +11,7 @@ public class CommentDaoJpaUnitTest extends JpaUnitTest {
 	
 	@Override
 	protected void initTest() throws Exception {
-		 commentDaoTest = new CommentDaoTestDelegate();
-
-		commentDaoTest.init(entityManager);
+		commentDaoTest = new CommentDaoTestDelegate();
 		commentDaoTest.insertData(entityManager);
 	}
 
@@ -37,8 +35,5 @@ public class CommentDaoJpaUnitTest extends JpaUnitTest {
 	public void testDelete() {
 		commentDaoTest.testDelete();
 	}
-	
-	
-	
 
 }

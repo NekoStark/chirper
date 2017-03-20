@@ -15,7 +15,7 @@
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.0.11.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>it.unifi.ing</groupId>
 			<artifactId>chirper-test</artifactId>

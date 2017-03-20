@@ -12,8 +12,13 @@ public class UserDaoJpaUnitTest extends JpaUnitTest {
 	@Override
 	protected void initTest() throws Exception {
 		userDaoTest = new UserDaoTestDelegate();
-
-		userDaoTest.init(entityManager);
+    
+		try {
+			userDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+		
 		userDaoTest.insertData(entityManager);
 	}
 

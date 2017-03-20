@@ -39,7 +39,7 @@ public class User extends BaseEntity {
 	}
 
 	public User(String uuid) {
-		this.setUuid(uuid);
+		super(uuid);
 		init();
 	}
 
@@ -112,6 +112,7 @@ public class User extends BaseEntity {
 
 	public void clearChirp() {
 		chirps.clear();
+
 	}
 
 	void addChirp(Chirp chirp) {

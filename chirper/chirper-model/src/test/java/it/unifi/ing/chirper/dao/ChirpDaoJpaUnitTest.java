@@ -13,7 +13,12 @@ public class ChirpDaoJpaUnitTest extends JpaUnitTest {
 	protected void initTest() throws Exception {
 		chirpDaoTest = new ChirpDaoTestDelegate();
 
-		chirpDaoTest.init(entityManager);
+		try {
+			chirpDaoTest.init(entityManager);
+		} catch (IllegalAccessException e) {
+			throw new JpaTestInitializationException(e);
+		}
+		
 		chirpDaoTest.insertData(entityManager);
 	}
 

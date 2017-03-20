@@ -20,6 +20,9 @@ public abstract class BaseEntity {
 	}
 
 	public BaseEntity(String uuid) {
+		if(uuid == null) {
+			throw new IllegalArgumentException("uuid cannot be null");
+		}
 		this.uuid = uuid;
 	}
 
@@ -27,16 +30,8 @@ public abstract class BaseEntity {
 		return id;
 	}
 
-	void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getUuid() {
 		return uuid;
-	}
-
-	void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	@Override
@@ -61,7 +56,6 @@ public abstract class BaseEntity {
 		if (uuid == null) {
 			return false;
 		}
-
 		BaseEntity other = (BaseEntity) obj;
 		return uuid.equals(other.getUuid());
 	}
