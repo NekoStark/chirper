@@ -10,7 +10,7 @@ public class CommentDaoJpaIT extends JpaIT {
 	private CommentDaoTestDelegate commentDaoTest;
 
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		commentDaoTest = new CommentDaoTestDelegate();
 
 		try {

@@ -3,6 +3,7 @@ package it.unifi.ing.chirper.dao;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegates.UserDaoTestDelegate;
+import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class UserDaoJpaUnitTest extends JpaUnitTest {
@@ -10,7 +11,7 @@ public class UserDaoJpaUnitTest extends JpaUnitTest {
 	private UserDaoTestDelegate userDaoTest;
 	
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		userDaoTest = new UserDaoTestDelegate();
     
 		try {

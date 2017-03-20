@@ -10,7 +10,7 @@ public class ChirpDaoJpaIT extends JpaIT{
 private ChirpDaoTestDelegate chirpDaoTest;
 	
 	@Override
-	protected void initTest() throws Exception {
+	protected void initTest() throws JpaTestInitializationException {
 		chirpDaoTest = new ChirpDaoTestDelegate();
 
 
