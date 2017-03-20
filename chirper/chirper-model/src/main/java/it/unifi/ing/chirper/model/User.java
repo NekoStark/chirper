@@ -97,10 +97,6 @@ public class User extends BaseEntity {
 		}
 	}
 
-	public void clearFriends() {
-		friends.clear();
-	}
-
 	@JsonIgnore
 	public List<Chirp> getChirps() {
 		return Collections.unmodifiableList(chirps);
@@ -108,11 +104,6 @@ public class User extends BaseEntity {
 
 	public void removeChirp(Chirp chirp) {
 		chirps.remove(chirp);
-	}
-
-	public void clearChirp() {
-		chirps.clear();
-
 	}
 
 	void addChirp(Chirp chirp) {

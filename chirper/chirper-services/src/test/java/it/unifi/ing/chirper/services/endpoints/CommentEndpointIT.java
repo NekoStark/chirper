@@ -34,6 +34,12 @@ public class CommentEndpointIT extends ServiceIT {
 	public void testAddNoContent() {
 		testDelegate.testAddNoContent();
 	}
+	
+	@Test
+	public void testAddWrongIds() {
+		testDelegate.testAddWrongIds();
+	}
+
 
 	@Test
 	public void testUpdate() {
