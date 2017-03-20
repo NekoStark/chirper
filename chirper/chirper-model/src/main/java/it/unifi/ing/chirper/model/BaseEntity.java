@@ -8,10 +8,11 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class BaseEntity {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(unique = true)
 	private String uuid;
 
@@ -52,7 +53,9 @@ public abstract class BaseEntity {
 		if (!(obj instanceof BaseEntity)) {
 			return false;
 		}
-		
+		if (uuid == null) {
+			return false;
+		}
 		BaseEntity other = (BaseEntity) obj;
 		return uuid.equals(other.getUuid());
 	}

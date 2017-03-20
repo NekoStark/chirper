@@ -16,7 +16,7 @@ import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
 
-public class CommentDaoDelegate {
+public class CommentDaoTestDelegate {
 	private CommentDao commentDao;
 	private ChirpDao chirpDao;
 	private UserDao userDao;
@@ -57,7 +57,7 @@ public class CommentDaoDelegate {
 		assertNotNull(comment.getAuthor());
 		assertNotNull(comment.getChirp());
 		
-		commentDao.delete(commentId);
+		commentDao.delete(commentDao.findById(commentId));
 		
 		assertNull(commentDao.findById(comment.getId()));
 	}

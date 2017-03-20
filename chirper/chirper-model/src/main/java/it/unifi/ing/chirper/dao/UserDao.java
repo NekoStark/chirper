@@ -18,10 +18,8 @@ public class UserDao {
 
 	public User findById(Long userId) {
 		return entityManager.find(User.class, userId);
-	}
-
-	public void delete(Long userId) {
-		User user = findById(userId);
+	}	
+	public void delete(User user) {
 		for (User friend : user.getFriends()) {
 			friend.removeFriend(user);
 		}
@@ -33,6 +31,12 @@ public class UserDao {
 				.createQuery("from User u where " 
 						+ "u.userName = :uUsr", User.class)
 				.setParameter("uUsr", username)
+				.getResultList();
+	}
+	
+	public List<User> allUser() {
+		return entityManager
+				.createQuery("from User ", User.class)
 				.getResultList();
 	}
 

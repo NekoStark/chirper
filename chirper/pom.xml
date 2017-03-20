@@ -16,6 +16,7 @@
 	<modules>
 		<module>chirper-test</module>
 		<module>chirper-model</module>
+		<module>chirper-services</module>
 	</modules>
 
 	<build>

@@ -16,7 +16,7 @@ import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
 import it.unifi.ing.chirper.model.factory.ModelFactory;
 
-public class UserDaoDelegate {
+public class UserDaoTestDelegate {
 
 	private UserDao userDao;
 	private ChirpDao chirpDao;
@@ -51,12 +51,16 @@ public class UserDaoDelegate {
 		assertEquals(1, friend.getFriends().size());
 		assertNotNull(chirp);
 
-		userDao.delete(userId);
+		userDao.delete(userDao.findById(chirpId));
 
 		assertEquals(0, friend.getFriends().size());
 		assertNull(chirpDao.findById(chirpId));
 	}
 
+	
+	public void testAllUser(){
+		assertEquals(2, userDao.allUser().size());
+	}
 
 	public void init(EntityManager entityManager) throws IllegalAccessException {
 		userDao = new UserDao();
@@ -65,7 +69,7 @@ public class UserDaoDelegate {
 		FieldUtils.writeDeclaredField(userDao, "entityManager", entityManager, true);
 		FieldUtils.writeDeclaredField(chirpDao, "entityManager", entityManager, true);
 	}
-
+	
 	public void insertData(EntityManager entityManager) {
 		User user = ModelFactory.user();
 

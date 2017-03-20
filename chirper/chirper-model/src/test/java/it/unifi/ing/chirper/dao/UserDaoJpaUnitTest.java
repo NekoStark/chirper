@@ -2,18 +2,17 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegates.UserDaoDelegate;
-import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
+import it.unifi.ing.chirper.dao.delegates.UserDaoTestDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaUnitTest;
 
 public class UserDaoJpaUnitTest extends JpaUnitTest {
 
-	private UserDaoDelegate userDaoTest;
+	private UserDaoTestDelegate userDaoTest;
 	
 	@Override
-	protected void initTest() throws JpaTestInitializationException {
-		userDaoTest = new UserDaoDelegate();
-
+	protected void initTest() throws Exception {
+		userDaoTest = new UserDaoTestDelegate();
+    
 		try {
 			userDaoTest.init(entityManager);
 		} catch (IllegalAccessException e) {
@@ -41,6 +40,12 @@ public class UserDaoJpaUnitTest extends JpaUnitTest {
 	@Test
 	public void testDeleteUser() {
 		userDaoTest.testDeleteUser();
+	}
+	
+	
+	@Test
+	public void testAllUser() {
+		userDaoTest.testAllUser();
 	}
 
 }

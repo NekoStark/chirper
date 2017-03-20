@@ -1,0 +1,7 @@
+/target/
+.classpath
+.settings/
+.project
+.DS_Store
+docker/wildfly/*.war
+docker/wildfly/*-ds.xml

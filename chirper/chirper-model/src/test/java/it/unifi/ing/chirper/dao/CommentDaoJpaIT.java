@@ -2,16 +2,16 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegates.CommentDaoDelegate;
+import it.unifi.ing.chirper.dao.delegates.CommentDaoTestDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaIT;
 import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 
 public class CommentDaoJpaIT extends JpaIT {
-	private CommentDaoDelegate commentDaoTest;
+	private CommentDaoTestDelegate commentDaoTest;
 
 	@Override
-	protected void initTest() throws JpaTestInitializationException {
-		commentDaoTest = new CommentDaoDelegate();
+	protected void initTest() throws Exception {
+		commentDaoTest = new CommentDaoTestDelegate();
 
 		try {
 			commentDaoTest.init(entityManager);

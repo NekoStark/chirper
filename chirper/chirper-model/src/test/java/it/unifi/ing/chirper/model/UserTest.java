@@ -56,6 +56,11 @@ public class UserTest {
 		assertEquals(friend, user.getFriends().iterator().next());
 		assertEquals(1, friend.getFriends().size());
 		assertEquals(user, friend.getFriends().iterator().next());
+		
+		user.removeFriend(friend);
+		
+		assertEquals(0, user.getFriends().size());
+		assertEquals(0, friend.getFriends().size());
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)

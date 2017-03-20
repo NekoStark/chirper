@@ -2,16 +2,17 @@ package it.unifi.ing.chirper.dao;
 
 import org.junit.Test;
 
-import it.unifi.ing.chirper.dao.delegates.ChirpDaoDelegate;
+import it.unifi.ing.chirper.dao.delegates.ChirpDaoTestDelegate;
 import it.unifi.ing.chirper.test.persistence.JpaIT;
 import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 
-public class ChirpDaoJpaIT extends JpaIT {
-private ChirpDaoDelegate chirpDaoTest;
+public class ChirpDaoJpaIT extends JpaIT{
+private ChirpDaoTestDelegate chirpDaoTest;
 	
 	@Override
-	protected void initTest() throws JpaTestInitializationException {
-		chirpDaoTest = new ChirpDaoDelegate();
+	protected void initTest() throws Exception {
+		chirpDaoTest = new ChirpDaoTestDelegate();
+
 
 		try {
 			chirpDaoTest.init(entityManager);
