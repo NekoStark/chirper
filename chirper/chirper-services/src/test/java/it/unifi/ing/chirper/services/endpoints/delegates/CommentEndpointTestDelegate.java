@@ -81,7 +81,7 @@ public class CommentEndpointTestDelegate {
 		//@formatter:off
 		given()
 			.header("userId", "9999")
-			.header("content", "")
+			.header("content", "hello")
 			.when()
 			.post("/chirp/" + c1.getId() + "/comments")
 			.then()
@@ -90,7 +90,7 @@ public class CommentEndpointTestDelegate {
 		
 		given()
 			.header("userId", u1.getId())
-			.header("content", "")
+			.header("content", "hello")
 			.when()
 			.post("/chirp/9999/comments")
 			.then()
