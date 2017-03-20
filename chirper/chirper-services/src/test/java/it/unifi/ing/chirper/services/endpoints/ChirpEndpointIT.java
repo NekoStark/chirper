@@ -51,6 +51,11 @@ public class ChirpEndpointIT extends ServiceIT {
 	}
 
 	@Test
+	public void testUpdateWrongIds() {
+		testDelegate.testUpdateWrongIds();
+	}
+
+	@Test
 	public void testDelete() {
 		testDelegate.testDelete();
 	}

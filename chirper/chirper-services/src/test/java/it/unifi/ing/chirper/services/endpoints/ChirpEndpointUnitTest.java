@@ -58,10 +58,15 @@ public class ChirpEndpointUnitTest extends ServiceUnitTest {
 	}
 
 	@Test
+	public void testUpdateWrongIds() {
+		testDelegate.testUpdateWrongIds();
+	}
+
+	@Test
 	public void testDelete() {
 		testDelegate.testDelete();
 	}
-	
+
 	@Override
 	protected Set<Object> getEndpoints() throws IllegalAccessException {
 		ChirpDao chirpDao = new ChirpDao();

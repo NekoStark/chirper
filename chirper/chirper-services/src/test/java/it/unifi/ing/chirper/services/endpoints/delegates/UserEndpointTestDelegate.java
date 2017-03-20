@@ -113,6 +113,7 @@ public class UserEndpointTestDelegate {
 		given()
 			.header("username", "Simone")
 			.header("email", "simone@unifi.it")
+			.header("password", "newPassword")
 			.when()
 			.put("/users/" + u1.getId())
 			.then()
