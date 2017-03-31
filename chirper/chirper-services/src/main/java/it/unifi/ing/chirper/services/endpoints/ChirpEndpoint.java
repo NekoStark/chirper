@@ -1,5 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -20,7 +22,6 @@ import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 @Path("/chirp")
 public class ChirpEndpoint {
@@ -55,7 +56,7 @@ public class ChirpEndpoint {
 			return Response.status(404).build();
 		}
 
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		chirp.setAuthor(author);
 		chirp.setContent(content);
 		chirpDao.save(chirp);

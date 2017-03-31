@@ -9,6 +9,7 @@ import org.junit.Test;
 import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.services.endpoints.delegates.ChirpEndpointTestDelegate;
+import it.unifi.ing.chirper.test.exception.TestInitializationException;
 import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 
 public class ChirpEndpointUnitTest extends ServiceUnitTest {
@@ -16,7 +17,7 @@ public class ChirpEndpointUnitTest extends ServiceUnitTest {
 	private ChirpEndpointTestDelegate testDelegate;
 
 	@Override
-	public void initTest() throws Exception {
+	public void initTest() throws TestInitializationException {
 		testDelegate = new ChirpEndpointTestDelegate();
 		testDelegate.init(entityManager);
 		testDelegate.insertData();

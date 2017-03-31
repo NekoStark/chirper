@@ -3,21 +3,21 @@ package it.unifi.ing.chirper.dao;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.delegates.ChirpDaoTestDelegate;
+import it.unifi.ing.chirper.test.exception.TestInitializationException;
 import it.unifi.ing.chirper.test.persistence.JpaIT;
-import it.unifi.ing.chirper.test.persistence.JpaTestInitializationException;
 
 public class ChirpDaoJpaIT extends JpaIT{
 private ChirpDaoTestDelegate chirpDaoTest;
 	
 	@Override
-	protected void initTest() throws JpaTestInitializationException {
+	protected void initTest() throws TestInitializationException {
 		chirpDaoTest = new ChirpDaoTestDelegate();
 
 
 		try {
 			chirpDaoTest.init(entityManager);
 		} catch (IllegalAccessException e) {
-			throw new JpaTestInitializationException(e);
+			throw new TestInitializationException(e);
 		}
 		
 		chirpDaoTest.insertData(entityManager);

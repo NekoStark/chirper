@@ -1,5 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.DELETE;
@@ -21,7 +23,6 @@ import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 @Path("/chirp")
 public class CommentEndpoint {
@@ -64,7 +65,7 @@ public class CommentEndpoint {
 			return Response.status(404).build();
 		}
 
-		Comment comment = ModelFactory.comment();
+		Comment comment = comment();
 		commentDao.save(comment);
 
 		comment.setAuthor(author);

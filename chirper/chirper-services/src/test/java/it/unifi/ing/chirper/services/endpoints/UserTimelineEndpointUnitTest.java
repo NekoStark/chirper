@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.services.endpoints.delegates.UserTimelineEndpointTestDelegate;
+import it.unifi.ing.chirper.test.exception.TestInitializationException;
 import it.unifi.ing.chirper.test.services.ServiceUnitTest;
 
 public class UserTimelineEndpointUnitTest extends ServiceUnitTest {
@@ -15,7 +16,7 @@ public class UserTimelineEndpointUnitTest extends ServiceUnitTest {
 	private UserTimelineEndpointTestDelegate testDelegate;
 
 	@Override
-	public void initTest() throws Exception {
+	public void initTest() throws TestInitializationException {
 		testDelegate = new UserTimelineEndpointTestDelegate();
 		testDelegate.init(entityManager);
 		testDelegate.insertData();

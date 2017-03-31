@@ -1,5 +1,8 @@
 package it.unifi.ing.chirper.dao.delegates;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -14,7 +17,6 @@ import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class CommentDaoTestDelegate {
 	private CommentDao commentDao;
@@ -26,7 +28,7 @@ public class CommentDaoTestDelegate {
 	private Long authorId;
 	
 	public void testSave() {
-		Comment comment = ModelFactory.comment();
+		Comment comment = comment();
 		commentDao.save(comment);
 		
 		assertNotNull(commentDao.findById(comment.getId()));
@@ -73,13 +75,13 @@ public class CommentDaoTestDelegate {
 	}
 
 	public void insertData(EntityManager entityManager) {
-		Comment comment = ModelFactory.comment();
+		Comment comment = comment();
 		comment.setContent("Content");
 		
-		User author = ModelFactory.user();
+		User author = user();
 		comment.setAuthor(author);
 		
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		comment.setChirp(chirp);
 		
 		entityManager.persist(chirp);
