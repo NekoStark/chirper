@@ -38,7 +38,7 @@ public abstract class BaseEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+		result = prime * result + uuid.hashCode();
 		return result;
 	}
 
