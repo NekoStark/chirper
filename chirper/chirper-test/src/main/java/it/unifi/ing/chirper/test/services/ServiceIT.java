@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import io.restassured.RestAssured;
-import it.unifi.ing.chirper.test.exception.TestInitializationException;
+import it.unifi.ing.chirper.test.exception.TestPropertyInitializationException;
 
 public abstract class ServiceIT extends ServiceTest {
 
@@ -22,7 +22,7 @@ public abstract class ServiceIT extends ServiceTest {
 			RestAssured.basePath = properties.getProperty("test.basepath");
 		
 		} catch (Exception e) {
-			throw new TestInitializationException(e);
+			throw new TestPropertyInitializationException(e);
 		}
 	}
 
