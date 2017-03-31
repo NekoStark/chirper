@@ -14,7 +14,7 @@ public abstract class ServiceIT extends ServiceTest {
 	static {
 		Properties properties = new Properties();
 		
-		try (InputStream in = ServiceIT.class.getResource("test.properties").openStream()) {
+		try (InputStream in = ServiceIT.class.getResource("/test.properties").openStream()) {
 			properties.load(in);
 			
 			RestAssured.baseURI = properties.getProperty("test.baseuri");
