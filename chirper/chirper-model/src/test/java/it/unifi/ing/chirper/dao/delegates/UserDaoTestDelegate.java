@@ -1,5 +1,7 @@
 package it.unifi.ing.chirper.dao.delegates;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -14,7 +16,6 @@ import it.unifi.ing.chirper.dao.ChirpDao;
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class UserDaoTestDelegate {
 
@@ -38,7 +39,7 @@ public class UserDaoTestDelegate {
 	}
 
 	public void testSave(){
-		User user = ModelFactory.user();
+		User user = user();
 		userDao.save(user);
 
 		assertNotNull(userDao.findById(user.getId()));
@@ -71,12 +72,12 @@ public class UserDaoTestDelegate {
 	}
 	
 	public void insertData(EntityManager entityManager) {
-		User user = ModelFactory.user();
+		User user = user();
 
-		User friend = ModelFactory.user();
+		User friend = user();
 		user.addFriend(friend);
 
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		chirp.setAuthor(user);
 
 		user.setEmail("test@unifi.it");

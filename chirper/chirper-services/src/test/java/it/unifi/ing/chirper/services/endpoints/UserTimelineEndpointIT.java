@@ -3,6 +3,7 @@ package it.unifi.ing.chirper.services.endpoints;
 import org.junit.Test;
 
 import it.unifi.ing.chirper.services.endpoints.delegates.UserTimelineEndpointTestDelegate;
+import it.unifi.ing.chirper.test.exception.TestInitializationException;
 import it.unifi.ing.chirper.test.services.ServiceIT;
 
 public class UserTimelineEndpointIT extends ServiceIT {
@@ -10,7 +11,7 @@ public class UserTimelineEndpointIT extends ServiceIT {
 	private UserTimelineEndpointTestDelegate testDelegate;
 
 	@Override
-	public void initTest() throws Exception {
+	public void initTest() throws TestInitializationException {
 		testDelegate = new UserTimelineEndpointTestDelegate();
 		testDelegate.init(entityManager);
 		testDelegate.insertData();

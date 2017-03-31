@@ -1,5 +1,8 @@
 package it.unifi.ing.chirper.dao.delegates;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -15,7 +18,6 @@ import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class ChirpDaoTestDelegate {
 
@@ -32,7 +34,7 @@ public class ChirpDaoTestDelegate {
 	}
 	
 	public void testSave(){
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		chirpDao.save(chirp);
 		
 		assertNotNull(chirpDao.findById(chirp.getId()));
@@ -72,16 +74,16 @@ public class ChirpDaoTestDelegate {
 	}
 
 	public void insertData(EntityManager entityManager) {
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		chirp.setContent("content");
 		
-		User author = ModelFactory.user();
+		User author = user();
 		chirp.setAuthor(author);
 		
-		Chirp reference = ModelFactory.chirp();
+		Chirp reference = chirp();
 		chirp.setReference(reference);
 		
-		Comment comment = ModelFactory.comment();
+		Comment comment = comment();
 		comment.setChirp(chirp);
 		
 		entityManager.persist(comment);

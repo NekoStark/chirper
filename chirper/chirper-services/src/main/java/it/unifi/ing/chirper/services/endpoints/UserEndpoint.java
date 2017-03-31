@@ -1,5 +1,7 @@
 package it.unifi.ing.chirper.services.endpoints;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -18,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import it.unifi.ing.chirper.dao.UserDao;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 @Path("/users")
 public class UserEndpoint {
@@ -56,7 +57,7 @@ public class UserEndpoint {
 			return Response.status(500).build();
 		}
 
-		User result = ModelFactory.user();
+		User result = user();
 		result.setUserName(username);
 		result.setEmail(email);
 		result.setPassword(password);

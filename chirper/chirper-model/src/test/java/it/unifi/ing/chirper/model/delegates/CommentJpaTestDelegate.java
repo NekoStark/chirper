@@ -1,5 +1,8 @@
 package it.unifi.ing.chirper.model.delegates;
 
+import static it.unifi.ing.chirper.model.factory.ModelFactory.chirp;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.comment;
+import static it.unifi.ing.chirper.model.factory.ModelFactory.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -8,7 +11,6 @@ import javax.persistence.EntityManager;
 import it.unifi.ing.chirper.model.Chirp;
 import it.unifi.ing.chirper.model.Comment;
 import it.unifi.ing.chirper.model.User;
-import it.unifi.ing.chirper.model.factory.ModelFactory;
 
 public class CommentJpaTestDelegate {
 	
@@ -21,13 +23,13 @@ public class CommentJpaTestDelegate {
 	}
 	
 	public void insertData() {
-		Comment comment = ModelFactory.comment();
+		Comment comment = comment();
 		comment.setContent("Content");
 		
-		User author = ModelFactory.user();
+		User author = user();
 		comment.setAuthor(author);
 		
-		Chirp chirp = ModelFactory.chirp();
+		Chirp chirp = chirp();
 		comment.setChirp(chirp);
 		
 		entityManager.persist(chirp);
