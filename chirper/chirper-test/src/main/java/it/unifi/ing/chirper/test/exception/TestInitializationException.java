@@ -1,6 +1,6 @@
 package it.unifi.ing.chirper.test.exception;
 
-public class TestInitializationException extends RuntimeException {
+public class TestInitializationException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public TestInitializationException() {
