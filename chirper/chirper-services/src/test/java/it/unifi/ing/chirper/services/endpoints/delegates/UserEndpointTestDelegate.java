@@ -144,14 +144,50 @@ public class UserEndpointTestDelegate {
 		//@formatter:off
 		given()
 			.header("username", "Simone")
-			.header("email", "simone@unifi.it")
-			.header("password", "newPassword")
 			.when()
 			.put("/users/" + u1.getId())
 			.then()
 			.assertThat()
 			.statusCode(200);
 
+		get("/users/" + u1.getId())
+			.then()
+			.assertThat()
+			.body(
+				"uuid", equalTo(u1.getUuid()),
+				"userName", equalTo("Simone"),
+				"password", nullValue(),
+				"email", equalTo("user1@email.it")
+			)
+			.statusCode(200);
+		
+		given()
+			.header("email", "simone@unifi.it")
+			.when()
+			.put("/users/" + u1.getId())
+			.then()
+			.assertThat()
+			.statusCode(200);
+	
+		get("/users/" + u1.getId())
+			.then()
+			.assertThat()
+			.body(
+				"uuid", equalTo(u1.getUuid()),
+				"userName", equalTo("Simone"),
+				"password", nullValue(),
+				"email", equalTo("simone@unifi.it")
+			)
+			.statusCode(200);
+		
+		given()
+			.header("password", "newPassword")
+			.when()
+			.put("/users/" + u1.getId())
+			.then()
+			.assertThat()
+			.statusCode(200);
+	
 		get("/users/" + u1.getId())
 			.then()
 			.assertThat()
