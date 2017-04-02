@@ -97,8 +97,40 @@ public class UserEndpointTestDelegate {
 			.statusCode(500);
 
 		given()
+			.header("username", "Simone")
+			.when()
+			.post("/users")
+			.then()
+			.statusCode(500);
+
+		given()
+			.header("username", "Simone")
+			.header("email", "simone@unifi.it")
+			.when()
+			.post("/users")
+			.then()
+			.statusCode(500);
+
+		given()
 			.header("username", "")
-			.header("email", "")
+			.when()
+			.post("/users")
+			.then()
+			.assertThat()
+			.statusCode(500);
+		
+		given()
+			.header("username", "Simone")
+			.header("password", "")
+			.when()
+			.post("/users")
+			.then()
+			.assertThat()
+			.statusCode(500);
+		
+		given()
+			.header("username", "Simone")
+			.header("password", "simone@unifi.it")
 			.header("password", "")
 			.when()
 			.post("/users")
